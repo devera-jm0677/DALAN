@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <title>DALAN - Login</title>
+    <meta
+      name="description"
+      content="Decision Aid for Licensure-based Academic Navigation - Login to navigate your college path with ease."
+    />
+  <link rel="stylesheet" href="/static/global.css" />
+  <link rel="stylesheet" href="/static/loginstyle.css" />
+  </head>
+  <body>
+           {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+          {% for category, message in messages %}
+            <div id="error" class="alert alert-{{category}}">{{ message }}</div>
+          {% endfor %}
+      {% endif %}
+    {% endwith %}
+    <main class="LOGIN-SCREEN">
+      <section class="DALAN">
+        <header class="group">
+          <div class="div-wrapper">
+            <h1 class="text-wrapper">DALAN</h1>
+            <p class="text-wrapper-10">Decision Aid for Licensure-based Academic Navigation</p>
+          </div>
+          <img class="img" src="/static/img/group-22.png" alt="DALAN logo decoration" />
+        </header>
+        <img
+          class="image"
+          src="/static/img/login.png"
+          alt="Illustration of students using online learning platform with graduation cap and certificate"
+        />
+      </section>
+      
+      <div class="rectangle" role="presentation">
+        <section class="LOGIN" aria-labelledby="login-heading">
+        
+          <header class="div">
+            <h2 class="text-wrapper-2" id="login-heading">Welcome!</h2>
+            <p class="p">Navigate your college path with ease.</p>
+          </header>
+          <!-- JS-friendly flash area for client-side or future server messages -->
+          <div id="flash-area" class="flash-messages" aria-live="polite" role="status" hidden></div>
+        
+          <form class="login-form" method="post" action="{{ url_for('login2')}}" novalidate>
+            <div class="form">
+              <label for="email-input" class="text-wrapper-4">Email</label>
+              <input type="email" id="email-input" name="email" class="rectangle-2" placeholder="Enter your email" required
+                autocomplete="email" aria-required="true" aria-describedby="email-error" />
+              <span id="email-error" class="error-message" role="alert" aria-live="polite"></span>
+            </div>
+            <div class="form-2">
+              <label for="password-input" class="text-wrapper-4">Password</label>
+              <input type="password" id="password-input" name="password" class="rectangle-3" placeholder="Enter your password"
+                required autocomplete="current-password" aria-required="true" aria-describedby="password-error" />
+              <span id="password-error" class="error-message" role="alert" aria-live="polite"></span>
+            </div>
+            <a href="/forgot-password" class="text-wrapper-6">Forgot password?</a>
+            <button type="submit" class="login">
+              <span class="rectangle-4" role="presentation"></span>
+              <span class="text-wrapper-7">Login</span>
+            </button>
+          </form>
+          <p class="don-t-have-any">
+            <span class="span">Don't have any account?</span>
+            <span class="text-wrapper-8">&nbsp;</span>
+            <a href="/register" class="text-wrapper-9">Register Now</a>
+          </p>
+        </section>
+      </div>
+    </main>
+    <script src="/static/login.js" defer></script>
+  </body>
+</html>
