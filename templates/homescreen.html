@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DALAN - Homescreen</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    
+    <link rel="stylesheet" href="static/homescreenStyle.css">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <aside id="sidebar" class="sidebar">
+        <!-- Logo -->
+        <div class="sidebar-logo">
+            <img src="/static/img/dalan.png" alt="DALAN Logo" class="logo-image">
+        </div>
+
+        <!-- Main Navigation -->
+        <nav class="sidebar-nav">
+            <button class="nav-item active" data-page="recommended" aria-label="Recommended">
+                <i class="bi bi-grid-fill" aria-hidden="true"></i>
+                <span class="nav-label">Recommended</span>
+            </button>
+            <button class="nav-item" data-page="universities" aria-label="Top Universities">
+                <i class="bi bi-mortarboard-fill" aria-hidden="true"></i>
+                <span class="nav-label">Top Universities</span>
+            </button>
+            <button class="nav-item" data-page="bookmarks" aria-label="Bookmarks">
+                <i class="bi bi-bookmark-fill" aria-hidden="true"></i>
+                <span class="nav-label">Bookmarks</span>
+            </button>
+            <button class="nav-item" data-page="news" aria-label="News">
+                <i class="bi bi-newspaper" aria-hidden="true"></i>
+                <span class="nav-label">News</span>
+            </button>
+        </nav>
+
+        <!-- Bottom Navigation -->
+        <nav class="sidebar-bottom">
+            <button class="nav-item" data-page="settings" aria-label="Settings">
+                <i class="bi bi-gear-fill" aria-hidden="true"></i>
+                <span class="nav-label">Settings</span>
+            </button>
+            <button class="nav-item" data-page="support" aria-label="Support">
+                <i class="bi bi-headset" aria-hidden="true"></i>
+                <span class="nav-label">Support</span>
+            </button>
+            <button class="nav-item" data-page="logout" aria-label="Log out">
+                <i class="bi bi-box-arrow-right" aria-hidden="true"></i>
+                <span class="nav-label">Log out</span>
+            </button>
+        </nav>
+    </aside>
+
+    <!-- Main Content Wrapper -->
+    <div id="mainWrapper" class="main-wrapper">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-top">
+                <!-- Search Bar -->
+                <div class="search-container">
+                    <label for="searchInput" class="visually-hidden">Search</label>
+                    <input 
+                        type="search" 
+                        id="searchInput"
+                        class="search-input" 
+                        placeholder="Search university, program, or location"
+                        aria-label="Search university, program, or location">
+                    <i class="bi bi-search search-icon" aria-hidden="true"></i>
+                </div>
+
+                <div class="flex-grow-1"></div>
+
+                <!-- Notification Button -->
+                <button class="icon-button" aria-label="Notifications">
+                    <i class="bi bi-bell-fill" aria-hidden="true"></i>
+                    <span class="badge-dot badge-blue" aria-label="New notifications"></span>
+                </button>
+
+                <!-- Messages Button -->
+                <button class="icon-button" aria-label="Messages">
+                    <i class="bi bi-chat-fill" aria-hidden="true"></i>
+                    <span class="badge-dot badge-red" aria-label="New messages"></span>
+                </button>
+
+                <!-- Profile -->
+                <button class="profile-button" aria-label="User profile menu">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop" alt="Kath's profile" class="profile-img">
+                    <span class="profile-name">Kath</span>
+                    <i class="bi bi-chevron-down" aria-hidden="true"></i>
+                </button>
+            </div>
+
+            <!-- Filter Pills -->
+            <nav class="filter-pills" aria-label="Filter programs">
+                <button class="filter-pill active" data-filter="all">All</button>
+                <button class="filter-pill" data-filter="licensure">Licensure</button>
+                <button class="filter-pill" data-filter="non-licensure">Non-Licensure</button>
+                <button class="filter-pill" data-filter="top-rated">Top-Rated</button>
+                <button class="filter-pill" data-filter="public">Public</button>
+                <button class="filter-pill" data-filter="private">Private</button>
+            </nav>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Programs Section -->
+            <section class="content-section" aria-labelledby="programsTitle">
+                <div class="section-header">
+                    <h2 id="programsTitle" class="section-title">Programs</h2>
+                    <button class="see-more-btn" aria-label="See more programs">see more</button>
+                </div>
+
+                <div class="row g-4" id="programsGrid" role="list">
+                    <!-- Programs will be inserted here by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Universities Section -->
+            <section class="content-section" aria-labelledby="universitiesTitle">
+                <div class="section-header">
+                    <h2 id="universitiesTitle" class="section-title">Universities</h2>
+                    <button class="see-more-btn" aria-label="See more universities">see more</button>
+                </div>
+
+                <div class="row g-4" id="universitiesGrid" role="list">
+                    <!-- Universities will be inserted here by JavaScript -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="static/homescreenScript.js"></script>
+</body>
+</html>
