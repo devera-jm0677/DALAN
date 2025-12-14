@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DALAN - Preference Setup</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap CSS (for progress bar and icons) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.css">
+    
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.3/dist/sweetalert2.min.css">
+    
+    <link rel="stylesheet" href="/static/setup.css">
+</head>
+<body>
+    <!-- Modal Overlay -->
+    <div id="preferencesModal" class="modal-overlay">
+        <!-- Modal Container -->
+        <div class="modal-container">
+            <!-- Left Section - Progress and Navigation -->
+            <aside class="modal-sidebar">
+                <h2 class="sidebar-title">Set up your preference</h2>
+                
+                <!-- Progress Bar (Bootstrap) -->
+                <div class="progress-container">
+                    <div class="progress" style="height: 6px; background-color: white; border-radius: 5px;">
+                        <div class="progress-bar" id="progressFill" role="progressbar" 
+                             style="width: 0%; background-color: #2441AC; transition: width 0.3s ease;" 
+                             aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                        </div>
+                    </div>
+                    <p class="progress-text" id="progressText">0/6 completed</p>
+                </div>
+                
+                <!-- Category Navigation -->
+                <nav class="category-nav">
+                    <div class="category-item" data-category="strand" data-step="1">
+                        <i class="bi bi-check-circle-fill category-icon icon-done"></i>
+                        <i class="bi bi-circle category-icon icon-current"></i>
+                        <i class="bi bi-circle category-icon icon-pending"></i>
+                        <span class="category-label">SHS Strand</span>
+                    </div>
+                    
+                    <div class="category-item" data-category="programs" data-step="2">
+                        <i class="bi bi-check-circle-fill category-icon icon-done"></i>
+                        <i class="bi bi-circle category-icon icon-current"></i>
+                        <i class="bi bi-circle category-icon icon-pending"></i>
+                        <span class="category-label">Target Programs</span>
+                    </div>
+                    
+                    <div class="category-item" data-category="location" data-step="3">
+                        <i class="bi bi-check-circle-fill category-icon icon-done"></i>
+                        <i class="bi bi-circle category-icon icon-current"></i>
+                        <i class="bi bi-circle category-icon icon-pending"></i>
+                        <span class="category-label">Location</span>
+                    </div>
+                    
+                    <div class="category-item" data-category="institution" data-step="4">
+                        <i class="bi bi-check-circle-fill category-icon icon-done"></i>
+                        <i class="bi bi-circle category-icon icon-current"></i>
+                        <i class="bi bi-circle category-icon icon-pending"></i>
+                        <span class="category-label">Institution Type</span>
+                    </div>
+                    
+                    <div class="category-item" data-category="budget" data-step="5">
+                        <i class="bi bi-check-circle-fill category-icon icon-done"></i>
+                        <i class="bi bi-circle category-icon icon-current"></i>
+                        <i class="bi bi-circle category-icon icon-pending"></i>
+                        <span class="category-label">Budget (optional)</span>
+                    </div>
+                    
+                    <div class="category-item" data-category="completion" data-step="6">
+                        <i class="bi bi-check-circle-fill category-icon icon-done"></i>
+                        <i class="bi bi-circle category-icon icon-current"></i>
+                        <i class="bi bi-circle category-icon icon-pending"></i>
+                        <span class="category-label">Review</span>
+                    </div>
+                </nav>
+                
+                <!-- Skip Button -->
+                <button class="skip-button" id="skipButton">Skip for now</button>
+            </aside>
+            
+            <!-- Right Section - Content -->
+            <main class="modal-content">
+                <!-- Header -->
+                <header class="content-header">
+                    <div class="header-text">
+                        <h1 class="content-title" id="contentTitle">SHS Strand</h1>
+                        <p class="content-subtitle" id="contentSubtitle">What is your Senior High School strand?</p>
+                    </div>
+                    <button class="close-button" id="closeButton" aria-label="Close modal">
+                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                            <path d="M8.33333 31.6667L20 20M20 20L31.6667 8.33333M20 20L8.33333 8.33333M20 20L31.6667 31.6667" stroke="#696868" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </header>
+                
+                <hr class="content-divider">
+                
+                <!-- Content Area (changes based on step) -->
+                <div class="content-body" id="contentBody">
+                    <!-- Content will be dynamically inserted here -->
+                </div>
+                
+                <!-- Help Link -->
+                <a href="#" class="help-link" id="helpLink">Need help choosing?</a>
+                
+                <!-- Navigation Buttons -->
+                <div class="button-group">
+                    <button class="nav-button back-button" id="backButton">
+                        <svg width="12" height="24" viewBox="0 0 12 24" fill="none">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M3.343 12L10.414 19.071L9 20.485L1.222 12.707C1.03453 12.5195 0.929214 12.2652 0.929214 12C0.929214 11.7348 1.03453 11.4805 1.222 11.293L9 3.515L10.414 4.929L3.343 12Z" fill="#696868"/>
+                        </svg>
+                        Back
+                    </button>
+                    <button class="nav-button next-button" id="nextButton">
+                        Next
+                        <svg width="12" height="24" viewBox="0 0 12 24" fill="none">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M3.343 12L10.414 19.071L9 20.485L1.222 12.707C1.03453 12.5195 0.929214 12.2652 0.929214 12C0.929214 11.7348 1.03453 11.4805 1.222 11.293L9 3.515L10.414 4.929L3.343 12Z" fill="white"/>
+                        </svg>
+                    </button>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.3/dist/sweetalert2.all.min.js"></script>
+    
+    <script src="/static/setup.js"></script>
+</body>
+</html>
