@@ -2,18 +2,52 @@
 // TODO: Connect to database in the future
 // Currently using localStorage as mock database
 
+console.log('=== REGISTER.JS LOADING ===');
+
 // Initialize when page loads
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM Content Loaded - Setting up register form');
     setupEventListeners();
 });
 
 // Setup event listeners
 function setupEventListeners() {
     const registerForm = document.getElementById('registerForm');
+    const registerButton = document.querySelector('.login-button');
+    
+    console.log('Register form element:', registerForm);
+    console.log('Register button element:', registerButton);
 
     // Handle register form submission
     if (registerForm) {
-        registerForm.addEventListener('submit', handleRegister);
+        console.log('Attaching submit listener to form');
+        registerForm.addEventListener('submit', function(e) {
+            console.log('Form submit event fired');
+            e.preventDefault(); // PREVENT NORMAL FORM SUBMISSION
+            e.stopPropagation();
+            handleRegister(e);
+            return false; // Extra insurance
+        });
+    } else {
+        console.error('ERROR: Register form not found!');
+    }
+    
+    // Also add click handler to button as backup
+    if (registerButton) {
+        registerButton.addEventListener('click', function(e) {
+            console.log('Button click event fired');
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Validate form
+            const form = document.getElementById('registerForm');
+            if (form && form.checkValidity()) {
+                handleRegister(e);
+            } else if (form) {
+                form.reportValidity();
+            }
+            return false;
+        });
     }
 
     // Add real-time password matching validation
@@ -43,7 +77,13 @@ function setupEventListeners() {
 
 // Handle register form submission
 async function handleRegister(e) {
-    e.preventDefault();
+    console.log('handleRegister called');
+    
+    // Prevent default again (just to be sure)
+    if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
     
     const firstNameInput = document.getElementById('firstName');
     const lastNameInput = document.getElementById('lastName');
@@ -58,30 +98,35 @@ async function handleRegister(e) {
     const password = passwordInput.value;
     const confirmPassword = confirmPasswordInput.value;
     
+    console.log('Form data:', { firstName, lastName, email });
+    
     // Basic validation
     if (!firstName || !lastName || !email || !password || !confirmPassword) {
         showError('Please fill in all fields');
-        return;
+        return false;
     }
     
     if (!isValidEmail(email)) {
         showError('Please enter a valid email address');
-        return;
+        return false;
     }
     
     if (password.length < 6) {
         showError('Password must be at least 6 characters long');
-        return;
+        return false;
     }
     
     if (password !== confirmPassword) {
         showError('Passwords do not match');
-        return;
+        return false;
     }
     
     // Show loading state
-    registerButton.classList.add('loading');
-    registerButton.disabled = true;
+    if (registerButton) {
+        registerButton.classList.add('loading');
+        registerButton.disabled = true;
+        registerButton.textContent = 'Creating account...';
+    }
     
     // Simulate API call delay (remove in production)
     await delay(800);
@@ -102,19 +147,23 @@ async function handleRegister(e) {
             lastName: registrationResult.user.lastName
         }));
         
-        showSuccess('Registration successful! Redirecting to setup...');
+        showSuccess('Registration successful! Setting up your preferences...');
         
-        // Redirect to user account setup/onboarding page
+        // Redirect to setup page after short delay
         setTimeout(() => {
-            // TODO: Create onboarding page to collect preferences
-            window.location.href = 'user-account.html';
-        }, 1500);
+            window.location.href = 'setup.html';
+        }, 2000);
     } else {
         // Registration failed
-        registerButton.classList.remove('loading');
-        registerButton.disabled = false;
+        if (registerButton) {
+            registerButton.classList.remove('loading');
+            registerButton.disabled = false;
+            registerButton.textContent = 'Register';
+        }
         showError(registrationResult.message);
     }
+    
+    return false; // Extra insurance against form submission
 }
 
 // Mock registration function
@@ -180,10 +229,11 @@ function initializeUserData(userId, firstName, lastName, email) {
             profileImage: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop'
         },
         preferences: {
+            shsStrand: 'Not set',
             program: 'Not set',
             location: 'Not set',
             schoolType: 'Not set',
-            shsStrand: 'Not set'
+            budget: 'Not set'
         },
         bookmarks: [],
         history: []
@@ -206,40 +256,24 @@ function isValidEmail(email) {
 
 // Show error message
 function showError(message) {
-    // Remove existing messages
-    removeMessages();
-    
-    const errorDiv = document.createElement('div');
-    errorDiv.className = 'error-message show';
-    errorDiv.textContent = message;
-    
-    const form = document.getElementById('registerForm');
-    form.insertBefore(errorDiv, form.firstChild);
-    
-    // Auto-remove after 5 seconds
-    setTimeout(() => {
-        errorDiv.classList.remove('show');
-        setTimeout(() => errorDiv.remove(), 300);
-    }, 5000);
+    Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: message,
+        confirmButtonColor: '#2441AC'
+    });
 }
 
 // Show success message
 function showSuccess(message) {
-    // Remove existing messages
-    removeMessages();
-    
-    const successDiv = document.createElement('div');
-    successDiv.className = 'success-message show';
-    successDiv.textContent = message;
-    
-    const form = document.getElementById('registerForm');
-    form.insertBefore(successDiv, form.firstChild);
-}
-
-// Remove all messages
-function removeMessages() {
-    const messages = document.querySelectorAll('.error-message, .success-message');
-    messages.forEach(msg => msg.remove());
+    Swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: message,
+        confirmButtonColor: '#2441AC',
+        showConfirmButton: false,
+        timer: 2000
+    });
 }
 
 // Utility delay function
