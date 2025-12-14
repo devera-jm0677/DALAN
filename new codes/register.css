@@ -1,0 +1,42 @@
+/* Register Page Specific Styles */
+/* Inherits most styles from login.css */
+
+/* Form row for side-by-side fields */
+.form-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.form-group-half {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+/* Adjust form spacing for additional fields */
+.register-form .form-group {
+    margin-bottom: 20px;
+}
+
+/* Smaller welcome message margin for register page */
+#registerForm ~ .welcome-message,
+.welcome-message {
+    margin-bottom: 50px;
+}
+
+/* Adjust button margin */
+#registerForm .login-button {
+    margin-top: 10px;
+}
+
+/* Responsive: Stack name fields on mobile */
+@media (max-width: 480px) {
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .form-group-half {
+        margin-bottom: 20px;
+    }
+}
