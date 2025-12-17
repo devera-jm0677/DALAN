@@ -1,50 +1,24 @@
 // DALAN Register JavaScript
-console.log('=== REGISTER.JS LOADING ===');
+console.log('Checkpoint 1: register.js file loaded');
 
 // Initialize when page loads
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM Content Loaded - Setting up register form');
     setupEventListeners();
 });
 
 // Setup event listeners
 function setupEventListeners() {
     const registerForm = document.getElementById('registerForm');
-    const registerButton = document.querySelector('.login-button');
     
-    console.log('Register form element:', registerForm);
-    console.log('Register button element:', registerButton);
-
     // Handle register form submission
     if (registerForm) {
-        console.log('Attaching submit listener to form');
         registerForm.addEventListener('submit', function(e) {
-            console.log('Form submit event fired');
+            console.log('Checkpoint 2: Form submission triggered.');
             e.preventDefault(); // PREVENT NORMAL FORM SUBMISSION
-            e.stopPropagation();
             handleRegister(e);
-            return false; // Extra insurance
         });
     } else {
         console.error('ERROR: Register form not found!');
-    }
-    
-    // Also add click handler to button as backup
-    if (registerButton) {
-        registerButton.addEventListener('click', function(e) {
-            console.log('Button click event fired');
-            e.preventDefault();
-            e.stopPropagation();
-            
-            // Validate form
-            const form = document.getElementById('registerForm');
-            if (form && form.checkValidity()) {
-                handleRegister(e);
-            } else if (form) {
-                form.reportValidity();
-            }
-            return false;
-        });
     }
 
     // Add real-time password matching validation
@@ -74,6 +48,12 @@ function setupEventListeners() {
 
 // Handle register form submission
 async function handleRegister(e) {
+    // This check is important to prevent the function from running twice
+    if (e.handled) {
+        return;
+    }
+    e.handled = true;
+
     if (e) {
         e.preventDefault();
         e.stopPropagation();
@@ -108,41 +88,49 @@ async function handleRegister(e) {
     }
 
     // Loading state
-if (registerButton) {
-    registerButton.disabled = true;
-    registerButton.textContent = 'Creating account...';
-}
+    if (registerButton) {
+        registerButton.disabled = true;
+        registerButton.textContent = 'Creating account...';
+    }
+
+    const payload = {
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
+        password: password
+    };
+
+    console.log('Checkpoint 3: Before fetch to /api/register with payload:', JSON.stringify(payload));
 
     try {
-        const response = await fetch("http://127.0.0.1:5000/api/register", {
+        const response = await fetch("/api/register", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({
-                first_name: firstName,
-                last_name: lastName,
-                email: email,
-                password: password
-            })
+            body: JSON.stringify(payload)
         });
 
+        console.log('Checkpoint 4: After fetch from /api/register. Response status:', response.status);
         const data = await response.json();
+        console.log('Response data:', data);
 
         if (response.ok && data.success) {
+            console.log('Registration success branch taken.');
             showSuccess('Registration successful! Setting up your preferences...');
 
             setTimeout(() => {
-                window.location.href = 'setup.html';
+                window.location.href = '/setup';
             }, 1500);
         } else {
+            console.log('Registration failed branch taken. Server error message:', data.error);
             showError(data.error || 'Registration failed');
             registerButton.disabled = false;
             registerButton.textContent = 'Register';
         }
 
     } catch (error) {
-        console.error(error);
+        console.error('Fetch failed with error:', error);
         showError('Could not connect to the server');
         registerButton.disabled = false;
         registerButton.textContent = 'Register';
@@ -175,6 +163,3 @@ function showSuccess(message) {
         timer: 2000
     });
 }
-console.log('=== DALAN Register Page ===');
-console.log('Create your account to get started');
-console.log('===========================');
