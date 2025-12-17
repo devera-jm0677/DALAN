@@ -36,7 +36,7 @@ def find_user_by_email(cursor, email):
 def create_user(cursor, first_name, last_name, email, hashed_password):
     cursor.execute(
         '''
-        INSERT INTO users (first_name, last_name, email, password)
+        INSERT INTO users (first_name, last_name, email, password_hash)
         VALUES (%s, %s, %s, %s)
         ''',
         (first_name, last_name, email, hashed_password)
@@ -49,13 +49,13 @@ def create_user(cursor, first_name, last_name, email, hashed_password):
 
 def upsert_user_profile(cursor, user_id, shs_strand_id, municipality_id, institution_type_id, budget_id):
     cursor.execute('''
-        INSERT INTO user_profiles
-            (user_id, shs_strand_id, municipality_id, institution_type_id, budget_id)
+        INSERT INTO user_profile
+            (user_id, strand_id, municipality_id, preferred_institution_type, budget_id)
         VALUES (%s, %s, %s, %s, %s)
         ON DUPLICATE KEY UPDATE
-            shs_strand_id = VALUES(shs_strand_id),
+            strand_id = VALUES(strand_id),
             municipality_id = VALUES(municipality_id),
-            institution_type_id = VALUES(institution_type_id),
+            preferred_institution_type = VALUES(preferred_institution_type),
             budget_id = VALUES(budget_id)
     ''', (
         user_id,
@@ -66,11 +66,11 @@ def upsert_user_profile(cursor, user_id, shs_strand_id, municipality_id, institu
     ))
 
 def delete_user_program_preferences(cursor, user_id):
-    cursor.execute("DELETE FROM user_program_preferences WHERE user_id = %s", (user_id,))
+    cursor.execute("DELETE FROM user_interests WHERE user_id = %s", (user_id,))
 
 def insert_user_program_preference(cursor, user_id, program_id):
     cursor.execute(
-        "INSERT INTO user_program_preferences (user_id, interest_program_id) VALUES (%s, %s)",
+        "INSERT INTO user_interests (user_id, interest_program_id) VALUES (%s, %s)",
         (user_id, program_id)
     )
 
