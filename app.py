@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, redirect, url_for
 from flask_cors import CORS
 
 # Import Blueprints
@@ -11,6 +11,10 @@ from routes.features import features_bp
 app = Flask(__name__)
 app.secret_key = "d4l4n"  # change later
 CORS(app)
+
+@app.route('/')
+def index():
+    return redirect(url_for('auth_bp.register_page'))
 
 # Register Blueprints
 app.register_blueprint(auth_bp)
