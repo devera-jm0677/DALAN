@@ -11,65 +11,6 @@ let BUDGET_RANGES = [];
 let districts = [];
 let municipalities = [];
 
-// Mock Data (Fallback if API fails)
-const MOCK_DATA = {
-    strands: [
-        { strand_id: 1, strand_name: 'STEM (Science, Technology, Engineering, and Mathematics)' },
-        { strand_id: 2, strand_name: 'ABM (Accountancy, Business, and Management)' },
-        { strand_id: 3, strand_name: 'HUMSS (Humanities and Social Sciences)' },
-        { strand_id: 4, strand_name: 'GAS (General Academic Strand)' },
-        { strand_id: 5, strand_name: 'TVL (Technical-Vocational-Livelihood Strand)' },
-        { strand_id: 6, strand_name: 'Others' }
-    ],
-    programs: [
-        { interest_program_id: 1, program_name: 'BS Nursing' },
-        { interest_program_id: 2, program_name: 'BS Civil Engineering' },
-        { interest_program_id: 3, program_name: 'BS Accountancy' },
-        { interest_program_id: 4, program_name: 'BS Psychology' },
-        { interest_program_id: 5, program_name: 'BS Information Technology' },
-        { interest_program_id: 6, program_name: 'BS Architecture' },
-        { interest_program_id: 7, program_name: 'BS Education' },
-        { interest_program_id: 8, program_name: 'BS Criminology' },
-        { interest_program_id: 9, program_name: 'BS Electrical Engineering' },
-        { interest_program_id: 10, program_name: 'Others' }
-    ],
-    institutionTypes: [
-        { type_id: 1, type_name: 'Public' },
-        { type_id: 2, type_name: 'Private' },
-        { type_id: 3, type_name: 'Vocational' },
-        { type_id: 4, type_name: 'Any' }
-    ],
-    budgetRanges: [
-        { budget_id: 1, label: 'Below ₱10,000' },
-        { budget_id: 2, label: '₱10,000 – ₱20,000' },
-        { budget_id: 3, label: '₱20,000 – ₱30,000' },
-        { budget_id: 4, label: 'Above ₱30,000' }
-    ],
-    districts: [
-        { district_id: 1, district_name: '1st District' },
-        { district_id: 2, district_name: '2nd District' },
-        { district_id: 3, district_name: '3rd District' },
-        { district_id: 4, district_name: '4th District' },
-        { district_id: 5, district_name: '5th District' },
-        { district_id: 6, district_name: '6th District' }
-    ],
-    municipalities: [
-        { municipality_id: 1, district_id: 1, municipality_name: 'Alaminos' },
-        { municipality_id: 2, district_id: 1, municipality_name: 'Bani' },
-        { municipality_id: 3, district_id: 1, municipality_name: 'Bolinao' },
-        { municipality_id: 4, district_id: 1, municipality_name: 'Anda' },
-        { municipality_id: 9, district_id: 2, municipality_name: 'Agno' },
-        { municipality_id: 10, district_id: 2, municipality_name: 'Aguilar' },
-        { municipality_id: 20, district_id: 3, municipality_name: 'Alcala' },
-        { municipality_id: 43, district_id: 3, municipality_name: 'San Carlos' },
-        { municipality_id: 28, district_id: 4, municipality_name: 'Lingayen' },
-        { municipality_id: 51, district_id: 4, municipality_name: 'Dagupan City' },
-        { municipality_id: 60, district_id: 5, municipality_name: 'Urdaneta City' },
-        { municipality_id: 52, district_id: 6, municipality_name: 'Calasiao' },
-        { municipality_id: 57, district_id: 6, municipality_name: 'Binmaley' }
-    ]
-};
-
 // Global State
 let currentStep = 1;
 let preferences = {
@@ -84,8 +25,6 @@ let preferences = {
 async function loadPreferenceData() {
     try {
         console.log('Attempting to fetch API data...');
-        // We use Promise.allSettled to allow some to fail without crashing everything immediately
-        // But for simplicity, we'll try fetch and catch global error
         const responses = await Promise.all([
             fetch('/api/shs_strands'),
             fetch('/api/programs'),
@@ -95,13 +34,8 @@ async function loadPreferenceData() {
             fetch('/api/municipalities')
         ]);
 
-        // Check if ANY response is not OK (or if it's the HTML 404 page from Live Server)
         for (const res of responses) {
             if (!res.ok) throw new Error(`API Endpoint ${res.url} returned ${res.status}`);
-            const contentType = res.headers.get("content-type");
-            if (contentType && contentType.includes("text/html")) {
-                throw new Error("API returned HTML instead of JSON (likely 404)");
-            }
         }
 
         SHS_STRANDS = await responses[0].json();
@@ -115,17 +49,13 @@ async function loadPreferenceData() {
         renderStep(1);
 
     } catch (error) {
-        console.warn('API Fetch failed, using MOCK DATA. Reason:', error.message);
-        
-        // Load fallback data
-        SHS_STRANDS = MOCK_DATA.strands;
-        PROGRAMS = MOCK_DATA.programs;
-        INSTITUTION_TYPES = MOCK_DATA.institutionTypes;
-        BUDGET_RANGES = MOCK_DATA.budgetRanges;
-        districts = MOCK_DATA.districts;
-        municipalities = MOCK_DATA.municipalities;
-
-        renderStep(1);
+        console.error('API Fetch failed, using MOCK DATA. Reason:', error.message);
+        Swal.fire({
+            icon: 'error',
+            title: 'Failed to Load Data',
+            text: 'Could not load preference options from the server. Please try again later.',
+            confirmButtonColor: '#2441AC'
+        });
     }
 }
 
@@ -600,11 +530,9 @@ function goToStep(step) {
 async function savePreferences() {
     console.log('SAVING PREFERENCES (Raw):', preferences);
     
-    // Map to app.py expected keys (camelCase)
     const payload = {
         shsStrandId: preferences.strand_id,
         programIds: preferences.program_ids,
-        // districtId not used by backend save
         municipalityId: preferences.municipality_id,
         institutionTypeId: preferences.type_id,
         budgetId: preferences.budget_id
@@ -626,22 +554,19 @@ async function savePreferences() {
                 text: 'Your preferences have been saved.',
                 confirmButtonColor: '#2441AC'
             }).then(() => {
-                closeModal();
+                window.location.href = '/dashboard';
             });
         } else {
-             // If 404/500/etc
-             throw new Error(`Server returned ${res.status}`);
+            const errorData = await res.json();
+            throw new Error(errorData.error || `Server returned ${res.status}`);
         }
     } catch (err) {
         console.error('Save failed:', err);
-        // Fallback for demo / offline
         Swal.fire({
-            icon: 'warning',
-            title: 'Offline / Demo Mode',
-            text: 'Could not connect to server. Preferences saved locally (mock).',
+            icon: 'error',
+            title: 'Save Failed',
+            text: err.message || 'Could not save your preferences. Please try again.',
             confirmButtonColor: '#2441AC'
-        }).then(() => {
-            closeModal();
         });
     }
 }
@@ -657,7 +582,7 @@ function skipPreferences() {
         confirmButtonText: 'Yes, skip'
     }).then((result) => {
         if (result.isConfirmed) {
-            closeModal();
+            window.location.href = '/dashboard';
         }
     });
 }
