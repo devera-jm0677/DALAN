@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request, session, render_template
 from werkzeug.security import generate_password_hash, check_password_hash
 import db_queries
+import pymysql
 
 auth_bp = Blueprint('auth_bp', __name__)
 
@@ -40,6 +41,8 @@ def register():
             session["user_id"] = user_id
 
         return jsonify({"success": True, "user_id": user_id})
+    except pymysql.Error as e:
+        return jsonify({"error": f"Database error: {e}"}), 500
     finally:
         conn.close()
 
@@ -58,7 +61,7 @@ def login():
         with conn.cursor() as cursor:
             user = db_queries.find_user_by_email(cursor, email)
 
-            if not user or not check_password_hash(user["password"], password):
+            if not user or not check_password_hash(user["password_hash"], password):
                 return jsonify({"error": "Invalid credentials"}), 401
 
             return jsonify({
@@ -70,7 +73,8 @@ def login():
                     "email": user["email"]
                 }
             })
-
+    except pymysql.Error as e:
+        return jsonify({"error": f"Database error: {e}"}), 500
     finally:
         conn.close()
 
