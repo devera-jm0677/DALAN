@@ -92,7 +92,7 @@ async function handleLogin(e) {
             showSuccess('Login successful! Redirecting...');
 
             setTimeout(() => {
-                window.location.href = 'homescreen.html';
+                window.location.href = '/dashboard';
             }, 1200);
 
         } else {
@@ -179,7 +179,7 @@ function logout() {
     // TODO: Clear session from database/auth service
     localStorage.removeItem('dalanCurrentUser');
     console.log('User logged out');
-    window.location.href = 'login.html';
+    window.location.href = '/register';
 }
 
 // Get current logged-in user
