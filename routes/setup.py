@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request, session, render_template
 import db_queries
+import pymysql
 
 setup_bp = Blueprint('setup_bp', __name__)
 
@@ -45,5 +46,8 @@ def save_user_profile():
                 db_queries.insert_user_program_preference(cursor, user_id, pid)
             conn.commit()
         return jsonify({"success": True})
+    except pymysql.Error as e:
+        conn.rollback()
+        return jsonify({"error": str(e)}), 500
     finally:
         conn.close()
