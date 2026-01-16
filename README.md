@@ -1,4 +1,4 @@
 # DALAN: A Decision Aid for Licensure-Based Academic Navigation
 A third year university project which aims to develop a digital platform that provides accessible and user-friendly insights into university performance, particularly through licensure examination results and other key indicators. By organizing and visualizing this data, the system helps students make better and more informed decisions about their educational paths.
 
-Find the final version in the "final" branch.
+Find the final version in the "final" branch of this repository.
