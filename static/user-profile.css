@@ -1,0 +1,264 @@
+/* User Account Specific Styles */
+/* Base sidebar and header styles are inherited from styles.css */
+
+/* Content Wrapper - Main + Right Sidebar */
+.content-wrapper {
+    display: flex;
+    gap: 1.5rem;
+    padding: 0 2.5rem 2.5rem;
+    margin-top: 1.5rem;
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    background-color: #f2f2f2;
+    border: 1px solid #d9d9d9;
+    border-radius: 20px;
+    padding: 2rem 2.5rem;
+    min-height: 600px;
+}
+
+/* Welcome Section */
+.welcome-section {
+    margin-bottom: 2.5rem;
+}
+
+.welcome-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: #2441ac;
+    margin-bottom: 0.5rem;
+}
+
+.welcome-subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: black;
+    margin: 0;
+}
+
+/* Dashboard Cards Grid */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+
+.dashboard-card {
+    background-color: white;
+    border-radius: 20px;
+    padding: 1.5rem 1.75rem;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-2px);
+}
+
+.dashboard-card-small {
+    grid-row: span 1;
+}
+
+.card-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: #fda015;
+    margin: 0 0 1rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.card-emoji {
+    font-size: 20px;
+}
+
+.card-title-text {
+    font-size: 22px;
+}
+
+.card-content {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: black;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.card-content strong {
+    font-weight: 600;
+}
+
+/* Right Sidebar */
+.right-sidebar {
+    flex: 0 0 357px;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    padding: 2.5rem 1.75rem;
+    height: fit-content;
+}
+
+/* User Profile Section */
+.user-profile-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-image-container {
+    margin-bottom: 1.5rem;
+}
+
+.user-profile-img {
+    width: 112px;
+    height: 112px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-info {
+    text-align: center;
+    margin-bottom: 1.75rem;
+}
+
+.user-fullname {
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: black;
+    margin: 0 0 0.25rem 0;
+}
+
+.user-email {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    color: black;
+    margin: 0;
+}
+
+.btn-edit-profile {
+    width: 135px;
+    height: 36px;
+    background-color: #2441ac;
+    border: none;
+    border-radius: 15px;
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 2rem;
+}
+
+.btn-edit-profile:hover {
+    background-color: #1432a0;
+}
+
+.sidebar-divider {
+    width: 100%;
+    border: none;
+    border-top: 1px solid #dadada;
+    margin: 0 0 1.5rem 0;
+}
+
+.sidebar-section {
+    width: 100%;
+    margin-bottom: 1.5rem;
+}
+
+.sidebar-section:last-child {
+    margin-bottom: 0;
+}
+
+.sidebar-section-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #2441ac;
+    margin: 0 0 1rem 0;
+}
+
+.preference-item,
+.history-item {
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: #686868;
+    margin-bottom: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.preference-item:last-child,
+.history-item:last-child {
+    margin-bottom: 0;
+}
+
+.preference-label,
+.history-label {
+    flex-shrink: 0;
+    margin-right: 1rem;
+}
+
+.preference-value,
+.history-value {
+    text-align: right;
+}
+
+/* Responsive Styles */
+@media (max-width: 1400px) {
+    .content-wrapper {
+        flex-direction: column;
+    }
+
+    .right-sidebar {
+        flex: 1;
+        max-width: 100%;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .content-wrapper {
+        padding: 0 1.5rem 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .content-wrapper {
+        padding: 0 1rem 1rem;
+    }
+
+    .main-content {
+        padding: 1.5rem;
+    }
+
+    .right-sidebar {
+        padding: 1.5rem;
+    }
+
+    .welcome-title {
+        font-size: 28px;
+    }
+
+    .welcome-subtitle {
+        font-size: 16px;
+    }
+}

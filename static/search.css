@@ -1,0 +1,220 @@
+/* Search Results Specific Styles */
+
+/* Dropdown Filters */
+.dropdown-filters {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.dropdown-filter {
+    position: relative;
+}
+
+.dropdown-filter-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 40px;
+    padding: 0 1rem;
+    border: 1px solid #2441ac;
+    border-radius: 15px;
+    background-color: white;
+    color: black;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.dropdown-filter-btn:hover {
+    background-color: rgba(36, 65, 172, 0.05);
+}
+
+.dropdown-filter-btn i {
+    font-size: 14px;
+    color: #757575;
+    transition: transform 0.3s ease;
+}
+
+.dropdown-filter-btn[aria-expanded="true"] i {
+    transform: rotate(180deg);
+}
+
+.dropdown-filter-menu {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    min-width: 100%;
+    background-color: white;
+    border: 1px solid #d9d9d9;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 100;
+    display: none;
+    overflow: hidden;
+}
+
+.dropdown-filter-menu.show {
+    display: block;
+}
+
+.dropdown-filter-item {
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: none;
+    border: none;
+    text-align: left;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    color: black;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.dropdown-filter-item:hover {
+    background-color: rgba(113, 176, 230, 0.1);
+}
+
+.dropdown-filter-item.active {
+    background-color: rgba(113, 176, 230, 0.2);
+    color: #1432a0;
+    font-weight: 500;
+}
+
+/* Sort By */
+.sort-by-container {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    justify-content: flex-end;
+    margin-bottom: 1.5rem;
+}
+
+.sort-by-container label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    color: black;
+    margin: 0;
+}
+
+.sort-by-select {
+    height: 35px;
+    padding: 0 2rem 0 0.75rem;
+    border: 1px solid #2441ac;
+    border-radius: 15px;
+    background-color: white;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23000000' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 10l5 5 5-5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.5rem center;
+    background-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    color: black;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.sort-by-select:focus {
+    outline: none;
+    border-color: #1432a0;
+}
+
+/* Search Results Content */
+.search-results-content {
+    padding: 2.5rem;
+    background-color: #f2f2f2;
+    border: 1px solid #d9d9d9;
+    border-radius: 20px;
+    margin: 0 2.5rem 1.5rem;
+    min-height: calc(100vh - 300px);
+}
+
+.results-section {
+    width: 100%;
+}
+
+/* Program Card Adjustments for Search Results */
+.search-results-content .program-card {
+    background-color: white;
+}
+
+.search-program-card .search-program-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.search-program-card .university-name {
+    margin: 0;
+}
+
+.search-program-card .university-meta {
+    margin-bottom: 0.5rem;
+}
+
+.search-program-card .bookmark-btn {
+    font-size: 24px;
+    margin-left: auto;
+}
+
+.bookmark-placeholder {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .dropdown-filters {
+        gap: 10px;
+    }
+
+    .dropdown-filter-btn {
+        font-size: 14px;
+        height: 36px;
+        padding: 0 0.75rem;
+    }
+
+    .sort-by-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .sort-by-select {
+        width: 100%;
+    }
+
+    .search-results-content {
+        padding: 1.5rem;
+        margin: 0 1rem 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .dropdown-filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .dropdown-filter {
+        width: 100%;
+    }
+
+    .dropdown-filter-btn {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .dropdown-filter-menu {
+        width: 100%;
+    }
+}

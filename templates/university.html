@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DALAN - {{ university.university_name }}</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <link rel="stylesheet" href="/static/homescreenStyle.css">
+    <link rel="stylesheet" href="/static/program.css">
+    <link rel="stylesheet" href="/static/university.css">
+</head>
+<body data-user-email="{{ user.email }}">
+    <aside id="sidebar" class="sidebar">
+        <div class="sidebar-logo">
+            <img src="/static/img/DALANv2.png" alt="DALAN Logo" class="logo-image">
+        </div>
+        <nav>
+            <button 
+                type="button"
+                class="nav-item"
+                data-page="recommended"
+                aria-label="Go to Home"
+                onclick="window.location.href='/dashboard'">
+                <i class="bi bi-grid-fill"></i>
+                <span class="nav-label">Home</span>
+            </button>
+
+            <button 
+                type="button"
+                class="nav-item"
+                data-page="compare"
+                aria-label="Go to Compare"
+                onclick="window.location.href='/compare'">
+                <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                <span class="nav-label">Compare</span>
+            </button>
+
+            <button 
+                type="button"
+                class="nav-item"
+                data-page="bookmarks"
+                aria-label="Go to Bookmarks"
+                onclick="window.location.href='/bookmark'">
+                <i class="bi bi-bookmark-fill"></i>
+                <span class="nav-label">Bookmarks</span>
+            </button>
+        </nav>
+
+        <nav class="sidebar-bottom">
+            <button 
+                type="button"
+                class="nav-item"
+                data-page="logout"
+                data-logout
+                aria-label="Log out">
+                <i class="fa fa-sign-out" aria-hidden="true"></i>
+                <span class="nav-label">Log out</span>
+            </button>
+        </nav>
+    </aside>
+
+    <div id="mainWrapper" class="main-wrapper">
+        <header class="header">
+            <div class="header-top">
+            <button class="icon-button back-button" type="button" aria-label="Go back" onclick="history.back()">
+                <i class="bi bi-arrow-left"></i>
+            </button>
+
+                <div class="search-container">
+                    <input type="search" id="searchInput" class="search-input" placeholder="Search...">
+                    <i class="bi bi-search search-icon"></i>
+                </div>
+                <div class="flex-grow-1"></div>
+            <button class="profile-button" type="button" aria-label="User profile menu" onclick="window.location.href='/user-profile'">
+                        <img 
+                            src="{{ user.profile_image if user.profile_image else url_for('static', filename='img/profile-placeholder.jpeg') }}"
+                            alt="{{ user.first_name }}'s profile"
+                            class="profile-img">
+                        <span class="profile-name">{{ user.first_name }}</span>
+                    </button>
+            </div>
+        </header>
+
+        <main class="main-content program-profile-content">
+            <div class="profile-container">
+                <div class="profile-left">
+                    <section class="program-header">
+                        <img src="{{ university.logo_url }}" alt="{{ university.university_name }} Logo" class="program-logo">
+                        <div class="program-header-info">
+                            <h1 class="program-title program-name">{{ university.university_name }}</h1>
+                            <p class="program-university university-name">{{ university.municipality_name }}  – {{ university.type_name }}</p>
+                        </div>
+                    </section>
+
+                    <section class="program-description">
+                        <h3>About University</h3>
+                        <p class="program-description-text">{{ university.long_description or 'No long description available.' }}</p>
+                    </section>
+
+                    <section class="performance-summary">
+                        <h3>Programs Offered ({{ programs|length }})</h3>
+                        <ul>
+                            {% for p in programs %}
+                            <li>
+                                <button
+                                    type="button"
+                                    class="program-link-btn"
+                                    aria-label="View {{ p.program_name }} details"
+                                    onclick="window.location.href='/program/{{ p.program_id }}'">
+                                    {{ p.program_name }}
+                                </button>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </section>
+
+                </div>
+
+                <aside class="profile-right">
+                    <section class="info-card">
+                        <h3 class="info-title">Municipality</h3>
+                        <ul class="info-list">
+                            <li><span data-info="type">{{ university.full_location }}</span></li>
+                        </ul>
+                    </section>
+                    <section class="info-card">
+                        <h3 class="info-title">Institution Type</h3>
+                        <ul class="info-list">
+                            <li><span data-info="type">{{ university.type_name }}</span></li>
+                        </ul>
+                    </section>
+
+                    <!-- <section class="info-card tuition-card">
+                        <h3 class="info-title tuition-title">Tuition Fee</h3>
+                        {% if tuition %}
+                            <div class="d-flex align-items-baseline gap-1">
+                                <p class="tuition-amount">
+                                    ₱{{ "{:,.0f}".format(tuition.amount_per_year) }}
+                                </p>
+                                <span class="tuition-note">per year</span>
+                            </div>
+                        {% else %}
+                            <p class="tuition-amount">Not Available</p>
+                        {% endif %}
+                    </section> -->
+
+                    <!-- <section class="info-card">
+                        <h3 class="info-title">Admission Requirements</h3>
+                        <ul class="info-list">
+                            {% for req in requirements %}
+                                <li>{{ req }}</li>
+                            {% else %}
+                                <li>No requirements listed.</li>
+                            {% endfor %}
+                        </ul>
+                    </section>
+
+                    <section class="info-card">
+                        <h3 class="info-title">Available Scholarships</h3>
+                        <ul class="info-list">
+                            {% for scholarship in scholarships %}
+                                <li>{{ scholarship }}</li>
+                            {% else %}
+                                <li>No scholarships listed.</li>
+                            {% endfor %}
+                        </ul>
+                    </section> -->
+
+                    <section class="info-card">
+                        <h3 class="info-title">Contact Information</h3>
+                        <ul class="info-list">
+                            <li><strong>Website:</strong> <span data-info="type">{{ university.website }}</span></li>
+                            <li><strong>Phone:</strong> <span data-info="licensure">{{ university.phone }}</span></li>
+                            <li><strong>Email:</strong> <span data-info="location" data-ssr="true">{{ university.email }}</span></li>
+                        </ul>
+                    </section>
+
+                    <section class="info-card location-card">
+                        <h3 class="info-title">Location</h3>
+                        <div id="map" class="location-map" data-lat="{{ university.latitude }}" data-lon="{{ university.longitude }}"></div>
+                        <button class="btn-view-map" id="btnViewMap">View Larger Map</button>
+                    </section>
+                    </div>
+                </aside>
+            </div>
+        </main>
+    </div>
+
+    <!-- Compare Modal -->
+    <div class="modal fade" id="compareModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content compare-modal-content">
+        <div class="modal-header compare-modal-header">
+            <h5 class="modal-title">Compare Programs</h5>
+            <button type="button" class="btn-close-custom" data-bs-dismiss="modal">
+            <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+
+        <div class="modal-body compare-modal-body">
+
+            <!-- SEARCH BAR (same as compare.html) -->
+            <div class="compare-search-container">
+            <input
+                type="search"
+                id="compareSearchInput"
+                class="compare-search-input"
+                placeholder="Search programs to add..."
+            />
+            <i class="bi bi-search compare-search-icon"></i>
+            </div>
+
+            <!-- SEARCH RESULTS -->
+            <div
+            class="compare-search-results"
+            id="compareSearchResults"
+            ></div>
+
+            <!-- SELECTED PROGRAMS -->
+            <div class="compare-selected-label">
+            <h6>Currently Comparing</h6>
+            </div>
+
+            <div class="compare-programs-list" id="compareProgramsList"></div>
+
+        </div>
+
+        <div class="modal-footer">
+            <a href="#" id="btnGoCompare" class="btn btn-primary">
+                Go to Compare
+            </a>
+        </div>
+        </div>
+    </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/static/profile-persist.js"></script>
+    <script src="/static/search-bar.js"></script>
+    <script src="/static/university.js"></script>
+</body>
+</html>

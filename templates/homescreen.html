@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DALAN - Homescreen</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <link rel="stylesheet" href="/static/homescreenStyle.css">
+</head>
+<body data-user-email="{{ user.email }}">
+    <!-- Sidebar Navigation -->
+<aside id="sidebar" class="sidebar">
+        <div class="sidebar-logo">
+            <img src="/static/img/DALANv2.png" alt="DALAN Logo" class="logo-image">
+        </div>
+        <nav>
+            <button 
+                type="button"
+                class="nav-item"
+                data-page="recommended"
+                aria-label="Go to Home"
+                onclick="window.location.href='/dashboard'">
+                <i class="bi bi-grid-fill"></i>
+                <span class="nav-label">Home</span>
+            </button>
+
+            <button 
+                type="button"
+                class="nav-item"
+                data-page="compare"
+                aria-label="Go to Compare"
+                onclick="window.location.href='/compare'">
+                <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                <span class="nav-label">Compare</span>
+            </button>
+
+            <button 
+                type="button"
+                class="nav-item"
+                data-page="bookmarks"
+                aria-label="Go to Bookmarks"
+                onclick="window.location.href='/bookmark'">
+                <i class="bi bi-bookmark-fill"></i>
+                <span class="nav-label">Bookmarks</span>
+            </button>
+        </nav>
+
+        <nav class="sidebar-bottom">
+            <button 
+                type="button"
+                class="nav-item"
+                data-page="logout"
+                data-logout
+                aria-label="Log out">
+                <i class="fa fa-sign-out" aria-hidden="true"></i>
+                <span class="nav-label">Log out</span>
+            </button>
+        </nav>
+    </aside>
+    <!-- Main Content Wrapper -->
+    <div id="mainWrapper" class="main-wrapper">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-top">
+            <button class="icon-button back-button" type="button" aria-label="Go back" onclick="history.back()">
+                <i class="bi bi-arrow-left"></i>
+            </button>
+
+                <!-- Search Bar -->
+                <div class="search-container">
+                    <label for="searchInput" class="visually-hidden">Search</label>
+                    <input 
+                        type="search" 
+                        id="searchInput"
+                        class="search-input" 
+                        placeholder="Search university, program, or location"
+                        aria-label="Search university, program, or location">
+                    <i class="bi bi-search search-icon" aria-hidden="true"></i>
+
+                    <div id="searchResultsDropdown" class="search-results-dropdown" hidden></div>
+                </div>
+
+                <div class="flex-grow-1"></div>
+
+                <!-- Profile -->
+            <button class="profile-button" type="button" aria-label="User profile menu" onclick="window.location.href='/user-profile'">
+                <img 
+                    src="{{ user.profile_image if user.profile_image else url_for('static', filename='img/profile-placeholder.jpeg') }}"
+                    alt="{{ user.first_name }}'s profile"
+                    class="profile-img">
+                <span class="profile-name">{{ user.first_name }}</span>
+            </button>
+            </div>
+
+            <!-- Filter Pills -->
+            <!-- <nav class="filter-pills" aria-label="Filter programs">
+                <button class="filter-pill active" data-filter="all">All</button>
+                <button class="filter-pill" data-filter="licensure">Licensure</button>
+                <button class="filter-pill" data-filter="non-licensure">Non-Licensure</button>
+                <button class="filter-pill" data-filter="top-rated">Top-Rated</button>
+                <button class="filter-pill" data-filter="public">Public</button>
+                <button class="filter-pill" data-filter="private">Private</button>
+            </nav> -->
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Programs Section -->
+            <section class="content-section" aria-labelledby="programsTitle">
+                <div class="section-header">
+                    <h2 id="programsTitle" class="section-title">
+                        Programs
+                        {% if personalized_programs %}
+                            <span class="recommendation-pill">Recommended for you</span>
+                        {% endif %}
+                    </h2>
+                    <button id="seeMorePrograms" class="see-more-btn" aria-label="See more programs">see more</button>
+                </div>
+
+                <div class="row g-4" id="programsGrid" role="list">
+                    {% for program in programs %}
+                    <div class="col-lg-6" role="listitem">
+                       <article class="program-card" data-program-id="{{ program.program_id }}">
+                            <div class="program-card-header" aria-hidden="true"></div>
+                            <div class="program-card-body">
+                               <div class="program-card-top">
+                                <img 
+                                    src="{{ program.logo_url or '/static/img/university-placeholder.png' }}"
+                                    alt="{{ program.university_name }} logo"
+                                    class="university-logo"
+                                >
+
+                                <div class="program-title-group">
+                                    <h3 class="program-card-title">{{ program.program_name }}</h3>
+                                    <h4 class="program-university">{{ program.university_name }}</h4>
+                                </div>
+
+                                <button
+                                    class="bookmark-btn"
+                                    data-program-id="{{ program.program_id }}"
+                                    aria-label="Add bookmark"
+                                >
+                                    <i class="bi bi-bookmark"></i>
+                                </button>
+                            </div>
+                                <!-- <p class="program-university">{{ program.university_name }}</p> -->
+                                <p class="program-description">{{ program.description }}</p>
+                                <div class="program-stats">
+                                    <div class="passing-rate-container">
+                                        <span class="passing-rate-text">📈 Passing Rate: {{ program.passing_rate|default('N/A', true) }}%</span>
+                                        <div class="progress-bar-custom" role="progressbar" aria-valuenow="{{ program.passing_rate|default(0, true) }}" aria-valuemin="0" aria-valuemax="100">
+                                            <div class="progress-bar-fill" style="width: {{ program.passing_rate|default(0, true) }}%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="program-meta">
+                                        💸 {{ program.tuition_range|default('N/A', true) }}
+                                        • {{ 'Licensure' if program.is_licensure_based == 1 else 'Non-Licensure' }}
+                                        • {{ program.institution_type }}
+                                    </div>
+                                </div>
+                                <div class="program-actions">
+                                    <button 
+                                        type="button"
+                                        class="btn-view-details"
+                                        aria-label="View details for {{ program.program_name }}"
+                                        onclick="window.location.href='/program/{{ program.program_id }}'">
+                                        View Details
+                                    </button>
+
+                                    <!-- <button class="btn-compare" data-program-id="{{ program.program_id }}" aria-label="Compare {{ program.program_name }} with other programs">
+                                        <i class="bi bi-plus-lg" aria-hidden="true"></i>
+                                        Compare
+                                    </button> -->
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <!-- Universities Section -->
+            <section class="content-section" aria-labelledby="universitiesTitle">
+                <div class="section-header">
+                    <h2 id="universitiesTitle" class="section-title">
+                        Universities
+                        {% if personalized_universities %}
+                            <span class="recommendation-pill">Recommended for you</span>
+                        {% endif %}
+                    </h2>
+                    <button id="seeMoreUniversities" class="see-more-btn" aria-label="See more universities">see more</button>
+                </div>
+
+                <div class="row g-4" id="universitiesGrid" role="list">
+                                                            {% for uni in universities %}
+                    <div class="col-lg-6" role="listitem">
+                        <article class="program-card university-card-plain"
+                            data-institution-type="{{ uni.institution_type|lower }}"
+                            role="button"
+                            tabindex="0"
+                            aria-label="View {{ uni.university_name }}"
+                            onclick="window.location.href='/university/{{ uni.university_id }}'"
+                            onkeydown="if (event.key === 'Enter' || event.key === ' ') { window.location.href='/university/{{ uni.university_id }}'; }">
+                            <div class="program-card-header" aria-hidden="true"></div>
+                            <div class="program-card-body">
+                                <div class="program-card-top">
+                                    <img
+                                        src="{{ uni.logo_url or '/static/img/university-placeholder.png' }}"
+                                        alt="{{ uni.university_name }} logo"
+                                        class="university-logo"
+                                    >
+
+                                    <div class="program-title-group">
+                                        <h3 class="program-card-title">{{ uni.university_name }}</h3>
+                                        <h4 class="program-university">{{ uni.location }}</h4>
+                                    </div>
+
+                                    <span class="bookmark-placeholder" aria-hidden="true"></span>
+                                </div>
+
+                                <p class="program-description">
+                                    {{ uni.short_description or 'No description available.' }}
+                                </p>
+
+                                <div class="program-stats">
+                                    <div class="passing-rate-container">
+                                        <span class="passing-rate-text">Programs: {{ uni.program_count }}</span>
+                                        <div class="progress-bar-custom" aria-hidden="true">
+                                            <div class="progress-bar-fill" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="program-meta">
+                                        {{ uni.institution_type }} | {{ uni.tuition_range|default('N/A', true) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Compare Modal -->
+    <div class="modal fade" id="compareModal" tabindex="-1" aria-labelledby="compareModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content compare-modal-content">
+                <div class="modal-header compare-modal-header">
+                    <h5 class="modal-title" id="compareModalLabel">Compare Programs</h5>
+                    <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="bi bi-x-lg"></i>
+                    </button>
+                </div>
+                <div class="modal-body compare-modal-body">
+                    <!-- Search Bar -->
+                    <div class="compare-search-container">
+                        <input 
+                            type="search" 
+                            id="compareSearchInput" 
+                            class="compare-search-input" 
+                            placeholder="Search programs to add..."
+                            aria-label="Search programs">
+                        <i class="bi bi-search compare-search-icon"></i>
+                    </div>
+
+                    <!-- Search Results -->
+                    <div class="compare-search-results" id="compareSearchResults" style="display: none;"></div>
+
+                    <!-- Programs List -->
+                    <div class="compare-programs-list" id="compareProgramsList">
+                        <!-- Programs will be added here dynamically -->
+                    </div>
+                    
+                    <!-- Empty State -->
+                    <div class="compare-empty-state" id="compareEmptyState">
+                        <i class="bi bi-clipboard-check"></i>
+                        <p>Search and add programs to compare</p>
+                    </div>
+                </div>
+                <div class="modal-footer compare-modal-footer">
+                    <button type="button" class="btn-go-compare" id="btnGoCompare">
+                        Go to Compare
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <script src="/static/profile-persist.js"></script>
+    <script src="/static/search-bar.js"></script>
+    <script src="/static/homescreenScript.js"></script>
+</body>
+</html>

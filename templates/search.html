@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DALAN - Search Results</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <link rel="stylesheet" href="/static/homescreenStyle.css">
+    <link rel="stylesheet" href="/static/search.css">
+</head>
+<body data-user-email="{{ user.email }}">
+<aside id="sidebar" class="sidebar">
+        <div class="sidebar-logo">
+            <img src="/static/img/DALANv2.png" alt="DALAN Logo" class="logo-image">
+        </div>
+        <nav>
+            <button 
+                type="button"
+                class="nav-item"
+                data-page="recommended"
+                aria-label="Go to Home"
+                onclick="window.location.href='/dashboard'">
+                <i class="bi bi-grid-fill"></i>
+                <span class="nav-label">Home</span>
+            </button>
+
+            <button 
+                type="button"
+                class="nav-item"
+                data-page="compare"
+                aria-label="Go to Compare"
+                onclick="window.location.href='/compare'">
+                <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                <span class="nav-label">Compare</span>
+            </button>
+
+            <button 
+                type="button"
+                class="nav-item"
+                data-page="bookmarks"
+                aria-label="Go to Bookmarks"
+                onclick="window.location.href='/bookmark'">
+                <i class="bi bi-bookmark-fill"></i>
+                <span class="nav-label">Bookmarks</span>
+            </button>
+        </nav>
+
+        <nav class="sidebar-bottom">
+            <button 
+                type="button"
+                class="nav-item"
+                data-page="logout"
+                data-logout
+                aria-label="Log out">
+                <i class="fa fa-sign-out" aria-hidden="true"></i>
+                <span class="nav-label">Log out</span>
+            </button>
+        </nav>
+    </aside>
+
+    <!-- Main Content Wrapper -->
+    <div id="mainWrapper" class="main-wrapper">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-top">
+            <button class="icon-button back-button" type="button" aria-label="Go back" onclick="history.back()">
+                <i class="bi bi-arrow-left"></i>
+            </button>
+
+                <!-- Search Bar -->
+                <div class="search-container">
+                    <label for="searchInput" class="visually-hidden">Search</label>
+                    <input 
+                        type="search" 
+                        id="searchInput"
+                        class="search-input" 
+                        placeholder="Search university, program, or location"
+                        aria-label="Search university, program, or location"
+                        value="{{ query }}">
+                    <i class="bi bi-search search-icon" aria-hidden="true"></i>
+                </div>
+
+                <div class="flex-grow-1"></div>
+
+                <!-- Notification Button -->
+                <!-- <button class="icon-button" aria-label="Notifications">
+                    <i class="bi bi-bell-fill" aria-hidden="true"></i>
+                    <span class="badge-dot badge-blue" aria-label="New notifications"></span>
+                </button> -->
+
+                <!-- Messages Button -->
+                <!-- <button class="icon-button" aria-label="Messages">
+                    <i class="bi bi-chat-fill" aria-hidden="true"></i>
+                    <span class="badge-dot badge-red" aria-label="New messages"></span>
+                </button> -->
+
+                <!-- Profile -->
+            <button class="profile-button" type="button" aria-label="User profile menu" onclick="window.location.href='/user-profile'">
+                        <img 
+                            src="{{ user.profile_image if user.profile_image else url_for('static', filename='img/profile-placeholder.jpeg') }}"
+                            alt="{{ user.first_name }}'s profile"
+                            class="profile-img">
+                        <span class="profile-name">{{ user.first_name }}</span>
+                    </button>
+            </div>
+
+            <!-- Dropdown Filter Pills -->
+            <!-- <nav class="dropdown-filters" aria-label="Dropdown filters">
+                <div class="dropdown-filter">
+                    <button class="dropdown-filter-btn" id="programTypesBtn" aria-haspopup="true" aria-expanded="false">
+                        <span>All Programs</span>
+                        <i class="bi bi-chevron-down" aria-hidden="true"></i>
+                    </button>
+                    <div class="dropdown-filter-menu" id="programTypesMenu" role="menu">
+                        <button class="dropdown-filter-item active" role="menuitem">All Programs</button>
+                        <button class="dropdown-filter-item" role="menuitem">Engineering</button>
+                        <button class="dropdown-filter-item" role="menuitem">Medical</button>
+                        <button class="dropdown-filter-item" role="menuitem">Business</button>
+                        <button class="dropdown-filter-item" role="menuitem">Education</button>
+                    </div>
+                </div>
+
+                <div class="dropdown-filter">
+                    <button class="dropdown-filter-btn" id="locationBtn" aria-haspopup="true" aria-expanded="false">
+                        <span>All Locations</span>
+                        <i class="bi bi-chevron-down" aria-hidden="true"></i>
+                    </button>
+                    <div class="dropdown-filter-menu" id="locationMenu" role="menu">
+                        <button class="dropdown-filter-item active" role="menuitem">Urdaneta City</button>
+                        <button class="dropdown-filter-item" role="menuitem">Dagupan City</button>
+                        <button class="dropdown-filter-item" role="menuitem">Lingayen</button>
+                        <button class="dropdown-filter-item" role="menuitem">San Carlos City</button>
+                    </div>
+                </div>
+
+                <div class="dropdown-filter">
+                    <button class="dropdown-filter-btn" id="typesBtn" aria-haspopup="true" aria-expanded="false">
+                        <span>All Types</span>
+                        <i class="bi bi-chevron-down" aria-hidden="true"></i>
+                    </button>
+                    <div class="dropdown-filter-menu" id="typesMenu" role="menu">
+                        <button class="dropdown-filter-item active" role="menuitem">All Types</button>
+                        <button class="dropdown-filter-item" role="menuitem">Licensure</button>
+                        <button class="dropdown-filter-item" role="menuitem">Non-Licensure</button>
+                    </div>
+                </div>
+
+                <div class="dropdown-filter">
+                    <button class="dropdown-filter-btn" id="tuitionBtn" aria-haspopup="true" aria-expanded="false">
+                        <span>Any Tuition</span>
+                        <i class="bi bi-chevron-down" aria-hidden="true"></i>
+                    </button>
+                    <div class="dropdown-filter-menu" id="tuitionMenu" role="menu">
+                        <button class="dropdown-filter-item active" role="menuitem">Any Tuition</button>
+                        <button class="dropdown-filter-item" role="menuitem">Free</button>
+                        <button class="dropdown-filter-item" role="menuitem">₱0-20K</button>
+                        <button class="dropdown-filter-item" role="menuitem">₱20K-40K</button>
+                        <button class="dropdown-filter-item" role="menuitem">₱40K+</button>
+                    </div>
+                </div>
+            </nav> -->
+
+            <!-- Filter Pills -->
+            {% if filter_scope == 'universities' %}
+            <nav class="filter-pills" aria-label="Filter universities">
+                <button class="filter-pill active" data-filter="all" data-scope="universities">All</button>
+                <button class="filter-pill" data-filter="public" data-scope="universities">Public</button>
+                <button class="filter-pill" data-filter="private" data-scope="universities">Private</button>
+                <button class="filter-pill" data-filter="vocational" data-scope="universities">Vocational</button>
+                <button class="filter-pill" data-filter="suc" data-scope="universities">SUC</button>
+                <button class="filter-pill" data-filter="luc" data-scope="universities">LUC</button>
+            </nav>
+            {% elif filter_scope == 'programs' %}
+            <nav class="filter-pills" aria-label="Filter programs">
+                {% if filter_kind == 'licensure' %}
+                <button class="filter-pill active" data-filter="all" data-scope="programs" data-kind="licensure">All</button>
+                <button class="filter-pill" data-filter="licensure" data-scope="programs" data-kind="licensure">Licensure</button>
+                <button class="filter-pill" data-filter="non-licensure" data-scope="programs" data-kind="licensure">Non-Licensure</button>
+                {% else %}
+                <button class="filter-pill active" data-filter="all" data-scope="programs" data-kind="institution_type">All</button>
+                {% for inst in institution_types %}
+                {% set type_name = inst.type_name|lower %}
+                {% if type_name not in ['vocational', 'any', 'luc'] %}
+                <button class="filter-pill" data-filter="{{ type_name }}" data-scope="programs" data-kind="institution_type">{{ inst.type_name }}</button>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+            </nav>
+            {% endif %}
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Programs Section -->
+            {% if show_programs %}
+            <section class="content-section" aria-labelledby="programsTitle">
+                <div class="section-header">
+                    <h2 id="programsTitle" class="section-title">Programs ({{ programs|length }})</h2>
+                    <!-- <button class="see-more-btn" aria-label="See more programs">see more</button> -->
+                </div>
+
+                <div class="row g-4" id="programsGrid" role="list">
+                                        {% for program in programs %}
+                    <div class="col-lg-6" role="listitem">
+                        <article
+                            class="program-card"
+                            data-program-id="{{ program.program_id }}"
+                            data-institution-type="{{ program.institution_type|lower }}"
+                            data-licensure="{{ 'licensure' if program.is_licensure_based == 1 else 'non-licensure' }}"
+                        >
+                            <div class="program-card-header" aria-hidden="true"></div>
+
+                            <div class="program-card-body">
+                                <div class="program-card-top">
+                                    <img
+                                        src="{{ program.logo_url or '/static/img/university-placeholder.png' }}"
+                                        alt="{{ program.university_name }} logo"
+                                        class="university-logo"
+                                    >
+
+                                    <div class="program-title-group">
+                                        <h3 class="program-card-title">{{ program.primary_title or program.program_name }}</h3>
+                                        <h4 class="program-university">{{ program.secondary_title or program.university_name }}</h4>
+                                    </div>
+
+                                    <button class="bookmark-btn" data-program-id="{{ program.program_id }}">
+                                        <i class="bi bi-bookmark"></i>
+                                    </button>
+                                </div>
+
+                                <p class="program-description">{{ program.description }}</p>
+
+                                <div class="program-stats">
+                                    <div class="passing-rate-container">
+                                        <span class="passing-rate-text">Passing Rate: {{ program.passing_rate|default('N/A', true) }}%</span>
+                                        <div class="progress-bar-custom">
+                                            <div class="progress-bar-fill" style="width: {{ program.passing_rate|default(0, true) }}%"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="program-meta">
+                                        Tuition: {{ program.tuition_range|default('N/A', true) }} | {{ 'Licensure' if program.is_licensure_based == 1 else 'Non-Licensure' }} | {{ program.institution_type }}
+                                    </div>
+                                </div>
+
+                                <div class="program-actions">
+                                    <button class="btn-view-details"
+                                        onclick="window.location.href='/program/{{ program.program_id }}'">
+                                        View Details
+                                    </button>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+
+            <!-- Universities Section -->
+            {% if show_universities %}
+            <section class="content-section" aria-labelledby="universitiesTitle">
+                <div class="section-header">
+                    <h2 id="universitiesTitle" class="section-title">Universities ({{ universities|length }})</h2>
+                    <!-- <button class="see-more-btn" aria-label="See more universities">see more</button> -->
+                </div>
+                <div class="row g-4" id="universitiesGrid" role="list">
+                                        {% for uni in universities %}
+                    <div class="col-lg-6" role="listitem">
+                        <article class="program-card" data-institution-type="{{ uni.institution_type|lower }}">
+                            <div class="program-card-body">
+                                <div class="program-card-top">
+                                    <img
+                                        src="{{ uni.logo_url or '/static/img/university-placeholder.png' }}"
+                                        alt="{{ uni.university_name }} logo"
+                                        class="university-logo"
+                                    >
+
+                                    <div class="program-title-group">
+                                        <h3 class="program-card-title">{{ uni.university_name }}</h3>
+                                        <h4 class="program-university">{{ uni.location }}</h4>
+                                    </div>
+
+                                    <span class="bookmark-placeholder" aria-hidden="true"></span>
+                                </div>
+
+                                <p class="program-description">{{ uni.short_description or 'No description available.' }}</p>
+
+                                <div class="program-stats">
+                                    <div class="passing-rate-container">
+                                        <span class="passing-rate-text">Passing Rate: N/A</span>
+                                        <div class="progress-bar-custom">
+                                            <div class="progress-bar-fill" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="program-meta">
+                                        Programs: {{ uni.program_count }} | {{ uni.institution_type }}
+                                    </div>
+                                </div>
+
+                                <div class="program-actions">
+                                    <button class="btn-view-details"
+                                        onclick="window.location.href='/university/{{ uni.university_id }}'">
+                                        View University
+                                    </button>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+        </main>
+        <!-- <main class="main-content search-results-content">
+            <section class="results-section" aria-labelledby="resultsTitle"> -->
+                <!-- Sort By -->
+                <!-- <div class="sort-by-container">
+                    <label for="sortBySelect">Sort by:</label>
+                    <select id="sortBySelect" class="sort-by-select" aria-label="Sort results by">
+                        <option value="">select</option>
+                        <option value="name">Program Name</option>
+                        <option value="passing-rate">Passing Rate</option>
+                        <option value="tuition-low">Tuition (Low to High)</option>
+                        <option value="tuition-high">Tuition (High to Low)</option>
+                    </select>
+                </div> -->
+
+                <!-- Results Grid -->
+                <!-- <div class="row g-4" id="resultsGrid" role="list"> -->
+                    <!-- Program cards will be inserted here by JavaScript -->
+                <!-- </div>
+            </section>
+        </main>
+    </div> -->
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/static/profile-persist.js"></script>
+    <script src="/static/search-bar.js"></script>
+    <script src="/static/search.js"></script>
+</body>
+</html>

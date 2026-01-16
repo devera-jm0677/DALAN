@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DALAN - User Account</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.3/dist/sweetalert2.min.css">
+    
+    <link rel="stylesheet" href="/static/homescreenStyle.css">
+    <link rel="stylesheet" href="/static/user-profile.css">
+    <link rel="stylesheet" href="/static/setup.css">
+    <link rel="stylesheet" href="/static/setup_modal.css">
+</head>
+<body class="is-profile" data-user-email="{{ user.email }}">
+    <!-- Sidebar Navigation -->
+<aside id="sidebar" class="sidebar">
+        <div class="sidebar-logo">
+            <img src="/static/img/DALANv2.png" alt="DALAN Logo" class="logo-image">
+        </div>
+        <nav>
+            <button 
+                type="button"
+                class="nav-item"
+                data-page="recommended"
+                aria-label="Go to Home"
+                onclick="window.location.href='/dashboard'">
+                <i class="bi bi-grid-fill"></i>
+                <span class="nav-label">Home</span>
+            </button>
+
+            <button 
+                type="button"
+                class="nav-item"
+                data-page="compare"
+                aria-label="Go to Compare"
+                onclick="window.location.href='/compare'">
+                <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                <span class="nav-label">Compare</span>
+            </button>
+
+            <button 
+                type="button"
+                class="nav-item"
+                data-page="bookmarks"
+                aria-label="Go to Bookmarks"
+                onclick="window.location.href='/bookmark'">
+                <i class="bi bi-bookmark-fill"></i>
+                <span class="nav-label">Bookmarks</span>
+            </button>
+        </nav>
+
+        <nav class="sidebar-bottom">
+            <button 
+                type="button"
+                class="nav-item"
+                data-page="logout"
+                data-logout
+                aria-label="Log out">
+                <i class="fa fa-sign-out" aria-hidden="true"></i>
+                <span class="nav-label">Log out</span>
+            </button>
+        </nav>
+    </aside>
+
+    <!-- Main Content Wrapper -->
+    <div id="mainWrapper" class="main-wrapper">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-top">
+            <button class="icon-button back-button" type="button" aria-label="Go back" onclick="history.back()">
+                <i class="bi bi-arrow-left"></i>
+            </button>
+
+                <!-- Search Bar -->
+                <div class="search-container">
+                    <label for="searchInput" class="visually-hidden">Search</label>
+                    <input 
+                        type="search" 
+                        id="searchInput"
+                        class="search-input" 
+                        placeholder="Search university, program, or location"
+                        aria-label="Search university, program, or location">
+                    <i class="bi bi-search search-icon" aria-hidden="true"></i>
+                </div>
+
+                <div class="flex-grow-1"></div>
+                <!-- Profile -->
+                    <button class="profile-button" type="button" onclick="window.location.href='/user-profile'">
+                        <img
+                            src="{{ user.profile_picture_url or url_for('static', filename='img/profile-placeholder.jpeg') }}"
+                            alt="{{ user.first_name }}'s profile"
+                            class="profile-img"
+                        >
+                        <span class="profile-name">{{ user.first_name }}</span>
+                    </button>
+            </div>
+        </header>
+
+        <!-- Main Content Area with Right Sidebar -->
+        <div class="content-wrapper">
+            <!-- Main Content Section -->
+            <main class="main-content">
+                <!-- Welcome Section -->
+                <section class="welcome-section">
+                    <h1 class="welcome-title">
+                        Welcome back, {{ user.first_name }}!
+                    </h1>
+                    <p class="welcome-subtitle">Here's a quick look at your DALAN journey and preferences.</p>
+                </section>
+
+                <!-- Dashboard Cards -->
+                <div class="dashboard-grid">
+                    <!-- Saved Programs Card -->
+                    <article class="dashboard-card">
+                        <h2 class="card-title">
+                            <span class="card-emoji">🎓</span>
+                            <span class="card-title-text">Saved Programs</span>
+                        </h2>
+                        <p class="card-content">
+                            You’ve bookmarked
+                            <strong>{{ bookmark_count }}</strong>
+                            program{{ 's' if bookmark_count != 1 else '' }}.
+                        </p>
+                    </article>
+
+                    <!-- Preferred Location Card -->
+                    <article class="dashboard-card">
+                        <h2 class="card-title">
+                            <span class="card-emoji">📍</span>
+                            <span class="card-title-text">Preferred Location</span>
+                        </h2>
+                        <p class="card-content">
+                            {% if preferred_location %}
+                                {{ preferred_location }}, Pangasinan
+                            {% else %}
+                                No preferred location set.
+                            {% endif %}
+                        </p>
+                    </article>
+
+                    <!-- Study Strand Card -->
+                    <article class="dashboard-card dashboard-card-small">
+                        <h2 class="card-title">
+                            <span class="card-emoji">📚</span>
+                            <span class="card-title-text">Study Strand</span>
+                        </h2>
+                        <p class="card-content">
+                            {% if strand_name %}
+                                Your SHS Strand: <strong>{{ strand_name }}</strong>
+                            {% else %}
+                                SHS Strand not set.
+                            {% endif %}
+                        </p>
+                    </article>
+
+                    <!-- Recently Viewed Card -->
+                    <article class="dashboard-card">
+                        <h2 class="card-title">
+                            <span class="card-emoji">🕒</span>
+                            <span class="card-title-text">Recently Viewed</span>
+                        </h2>
+                        <p class="card-content">
+                            {% if recent_views %}
+                                {% for item in recent_views %}
+                                    {{ item.program_name }}{% if not loop.last %}, {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                No recently viewed programs.
+                            {% endif %}
+                        </p>
+                    </article>
+                </div>
+            </main>
+
+            <!-- Right Sidebar -->
+            <aside class="right-sidebar">
+                <div class="user-profile-section">
+                    <!-- Profile Image -->
+                    <div class="profile-image-container">
+                        <img
+                            src="{{ user.profile_picture_url or url_for('static', filename='img/profile-placeholder.jpeg') }}"
+                            class="user-profile-img"
+                        >
+                    </div>
+
+                    <!-- User Info -->
+                    <div class="user-info">
+                        <h2 class="user-fullname">
+                            {{ user.first_name }} {{ user.last_name }}
+                        </h2>
+                        <p class="user-email">{{ user.email }}</p>
+                    </div>
+
+                    <!-- Edit Profile Button -->
+                    <div>
+                        <button
+                            class="btn-edit-profile"
+                            data-bs-toggle="modal"
+                            data-bs-target="#editProfileModal"
+                            >
+                            Edit Profile
+                        </button>
+
+                        <button
+                            class="btn-edit-profile mt-2"
+                            id="editPreferencesBtn"
+                            >
+                            Edit Preferences
+                        </button>
+                    </div>
+
+                    <!-- Divider -->
+                    <hr class="sidebar-divider">
+
+                    <!-- Preferences Section -->
+                    <section class="sidebar-section">
+                        <h3 class="sidebar-section-title">⭐ Preferences</h3>
+                        <div class="preference-item">
+                            <span class="preference-label">Program:</span>
+                            <span class="preference-value">
+                                {{ interests[0].program_name if interests else 'Not set' }}
+                            </span>
+                        </div>
+                        <div class="preference-item">
+                            <span class="preference-label">Location:</span>
+                            <span class="preference-value">
+                                {{ profile.municipality if profile and profile.municipality else 'Not set' }}
+                            </span>
+                        </div>
+                        <div class="preference-item">
+                            <span class="preference-label">School Type:</span>
+                            <span class="preference-value">
+                                {{ profile.institution_type if profile and profile.institution_type else 'Not set' }}
+                            </span>
+                        </div>
+                    </section>
+
+                    <!-- Divider -->
+                    <hr class="sidebar-divider">
+
+                    <!-- History Section -->
+                    <section class="sidebar-section">
+                        <h3 class="sidebar-section-title">🕘 History</h3>
+                        <div class="history-item">
+                            <span class="history-label">Last Viewed:</span>
+                            {% if recent_bookmarks %}
+                                <span class="history-value">
+                                    {{ recent_bookmarks[0].program_name }} - {{ recent_bookmarks[0].university_name }}
+                                </span>
+                            {% else %}
+                                <span class="history-value">No recent activity</span>
+                            {% endif %}
+
+                        </div>
+                        <div class="history-item">
+                            <span class="history-label">Previous:</span>
+                            {% if recent_bookmarks %}
+                                <span class="history-value">
+                                    {{ recent_bookmarks[0].program_name }} - {{ recent_bookmarks[0].university_name }}
+                                </span>
+                            {% else %}
+                                <span class="history-value">No recent activity</span>
+                            {% endif %}
+
+                        </div>
+                    </section>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editProfileModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+        <div class="modal-header">
+            <h5 class="modal-title">Edit Profile</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body">
+            <!-- Profile Picture -->
+            <div class="text-center mb-3">
+            <img
+                id="profilePreview"
+                src="{{ user.profile_picture_url or url_for('static', filename='img/profile-placeholder.jpeg') }}"
+                class="rounded-circle mb-2"
+                width="100"
+                height="100"
+            >
+            <input
+            type="file"
+            id="profilePicture"
+            class="form-control"
+            accept="image/*"
+            />
+            </div>
+
+            <!-- First Name -->
+            <div class="mb-3">
+            <label class="form-label">First Name</label>
+            <input id="firstName" class="form-control" value="{{ user.first_name }}">
+            </div>
+
+            <!-- Last Name -->
+            <div class="mb-3">
+            <label class="form-label">Last Name</label>
+            <input id="lastName" class="form-control" value="{{ user.last_name }}">
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input id="email" type="email" class="form-control" value="{{ user.email }}">
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3">
+            <label class="form-label">New Password</label>
+            <input id="password" type="password" class="form-control">
+            <small class="text-muted">Leave blank to keep current password</small>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-outline-secondary" data-bs-dismiss="modal">
+            Cancel
+            </button>
+            <button id="saveProfileBtn" class="btn btn-primary">
+            Save Changes
+            </button>
+        </div>
+
+        </div>
+    </div>
+    </div>
+    {% include "_preferences_modal.html" %}
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.3/dist/sweetalert2.all.min.js"></script>
+    <script src="/static/profile-persist.js"></script>
+    <script src="/static/search-bar.js"></script>
+    <script src="/static/setup.js"></script>
+    <script src="/static/user-profile.js"></script>
+</body>
+</html>

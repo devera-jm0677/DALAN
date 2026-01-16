@@ -1,0 +1,599 @@
+/* Compare Screen Specific Styles */
+
+.compare-content {
+    padding: 2rem 2.5rem;
+    min-height: calc(100vh - 120px);
+}
+
+.page-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: black;
+    margin: 0 0 2rem 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Section Header */
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.section-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: black;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Year Select */
+.year-select {
+    height: 36px;
+    padding: 0 2.5rem 0 1rem;
+    border: 1px solid #d9d9d9;
+    border-radius: 10px;
+    background-color: white;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23000000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 10l5 5 5-5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    color: black;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.year-select:focus {
+    outline: none;
+    border-color: #2441ac;
+}
+
+/* Charts Container */
+.overview-section {
+    margin-bottom: 2.5rem;
+}
+
+.charts-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+.chart-card {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.chart-card-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: black;
+    margin: 0 0 1.5rem 0;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+.chart-wrapper {
+    width: 100%;
+    height: 300px;
+    position: relative;
+}
+
+.chart-legend {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    color: #333;
+}
+
+.legend-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    flex-shrink: 0;
+}
+
+/* Details Controls */
+.details-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.btn-control {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: white;
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: black;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-control:hover {
+    background-color: #f5f5f5;
+    border-color: #2441ac;
+}
+
+.btn-control i {
+    font-size: 16px;
+}
+
+.btn-add {
+    color: #2441ac;
+}
+
+.btn-add:hover {
+    background-color: rgba(36, 65, 172, 0.05);
+}
+
+.btn-delete {
+    color: #ff4444;
+}
+
+.btn-delete:hover {
+    background-color: rgba(255, 68, 68, 0.05);
+}
+
+.btn-delete.active {
+    background-color: #ff4444;
+    color: white;
+    border-color: #ff4444;
+}
+
+/* Show/Hide Dropdown */
+.dropdown {
+    position: relative;
+}
+
+.dropdown-menu-custom {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    min-width: 220px;
+    background-color: white;
+    border: 1px solid #d9d9d9;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 0.75rem;
+    z-index: 100;
+    display: none;
+}
+
+.dropdown-menu-custom.show {
+    display: block;
+}
+
+.dropdown-item-custom {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    border-radius: 5px;
+}
+
+.dropdown-item-custom:hover {
+    background-color: rgba(113, 176, 230, 0.1);
+}
+
+.dropdown-item-custom input[type="checkbox"] {
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+    accent-color: #2441ac;
+}
+
+.dropdown-item-custom label {
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    color: #333;
+    margin: 0;
+    user-select: none;
+}
+
+.dropdown-divider {
+    margin: 0.5rem 0;
+    border-top: 1px solid #e0e0e0;
+}
+
+/* Program Cards Grid */
+.program-cards-grid {
+    display: flex;
+    gap: 0;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 100%;
+}
+
+/* Categories Column (Left Side) */
+.categories-column {
+    min-width: 220px;
+    width: 220px;
+    background-color: #f8f9fa;
+    border-radius: 0;
+    box-shadow: none;
+    border-right: 2px solid #d9d9d9;
+    flex-shrink: 0;
+}
+
+.categories-header {
+    padding: 2rem 1.5rem;
+    background-color: #e9ecef;
+    min-height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #d9d9d9;
+}
+
+.categories-header-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2441ac;
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+}
+
+.categories-body {
+    padding: 0;
+}
+
+.category-label-row {
+    display: flex;
+    align-items: center;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid #e0e0e0;
+    background-color: #f8f9fa;
+    min-height: 70px;
+}
+
+.category-label-row:last-child {
+    border-bottom: none;
+}
+
+.category-label-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: #2441ac;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Program Cards */
+.compare-program-card {
+    flex: 1;
+    min-width: 200px;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: visible;
+    position: relative;
+    border-right: 1px solid #e0e0e0;
+}
+
+.compare-program-card:last-child {
+    border-right: none;
+}
+
+.compare-program-card.delete-mode {
+    cursor: pointer;
+}
+
+.compare-program-card.delete-mode:hover {
+    background-color: rgba(255, 68, 68, 0.05);
+}
+
+.compare-program-card.selected-for-delete {
+    background-color: rgba(255, 68, 68, 0.1);
+}
+
+.compare-program-card.selected-for-delete::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 3px solid #ff4444;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.card-header-custom {
+    /* padding: 2rem 1.5rem; */
+    background: linear-gradient(135deg, #2441ac 0%, #71b0e6 100%);
+    color: white;
+    text-align: center;
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.card-university-logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+    background-color: white;
+}
+
+.card-program-name {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.3;
+}
+
+.card-university-name {
+    font-size: 13px;
+    font-weight: 400;
+    margin: 0;
+    opacity: 0.95;
+    font-family: 'Poppins', sans-serif;
+}
+
+.card-body-custom {
+    padding: 0;
+}
+
+.card-detail-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.25rem 1rem;
+    border-bottom: 1px solid #e0e0e0;
+    min-height: 70px;
+}
+
+.card-detail-row:last-child {
+    border-bottom: none;
+}
+
+.card-detail-label {
+    display: none;
+}
+
+.card-detail-value {
+    font-size: 15px;
+    font-weight: 500;
+    color: #333;
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    width: 100%;
+}
+
+.card-detail-value.highlight {
+    color: #2441ac;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.performance-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+}
+
+.performance-excellent {
+    background-color: rgba(76, 175, 80, 0.2);
+    color: #2e7d32;
+}
+
+.performance-good {
+    background-color: rgba(33, 150, 243, 0.2);
+    color: #1565c0;
+}
+
+.performance-average {
+    background-color: rgba(255, 193, 7, 0.2);
+    color: #f57c00;
+}
+
+/* Delete Indicator */
+.delete-indicator {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 35px;
+    height: 35px;
+    background-color: #ff4444;
+    color: white;
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    z-index: 15;
+}
+
+.compare-program-card.selected-for-delete .delete-indicator {
+    display: flex;
+}
+
+/* Comparison Container */
+.comparison-container {
+    display: flex;
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* Responsive Design */
+@media (max-width: 1400px) {
+    .program-cards-grid {
+        overflow-x: auto;
+        padding-bottom: 1rem;
+    }
+}
+
+/* Compare Modal Additions */
+#compareModal .modal-dialog {
+    height: 90vh;
+    max-height: 90vh;
+}
+
+#compareModal .compare-modal-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-height: 100%;
+}
+
+#compareModal .compare-modal-body {
+    overflow-y: auto;
+}
+
+#compareModal .compare-search-results {
+    max-height: 220px;
+    overflow-y: auto;
+}
+
+.compare-selected-label {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #2441ac;
+}
+
+.compare-selected-label h6 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #2441ac;
+    margin: 0;
+}
+
+.compare-modal-footer .btn-secondary {
+    background-color: #6c757d;
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.compare-modal-footer .btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+@media (max-width: 1200px) {
+    .charts-container {
+        grid-template-columns: 1fr;
+    }
+
+    .comparison-container {
+        overflow-x: auto;
+    }
+}
+
+@media (max-width: 992px) {
+    .compare-content {
+        padding: 1.5rem;
+    }
+
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .details-controls {
+        flex-wrap: wrap;
+        width: 100%;
+    }
+
+    .btn-control {
+        flex: 1;
+        min-width: 120px;
+    }
+
+    .compare-program-card {
+        min-width: 200px;
+    }
+
+    .categories-column {
+        min-width: 180px;
+        width: 180px;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-title {
+        font-size: 24px;
+    }
+
+    .section-title {
+        font-size: 20px;
+    }
+
+    .chart-legend {
+        grid-template-columns: 1fr;
+    }
+
+    .comparison-container {
+        overflow-x: scroll;
+    }
+}
+
+@media (max-width: 576px) {
+    .compare-content {
+        padding: 1rem;
+    }
+
+    .details-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn-control {
+        width: 100%;
+    }
+
+    .dropdown-menu-custom {
+        width: 100%;
+    }
+
+    .compare-program-card {
+        min-width: 180px;
+    }
+
+    .categories-column {
+        min-width: 150px;
+        width: 150px;
+    }
+}

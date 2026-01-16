@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DALAN - Clear Test Data</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        button {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+            margin-bottom: 15px;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background: #b91c1c;
+        }
+        button.view {
+            background: #2563eb;
+        }
+        button.view:hover {
+            background: #1d4ed8;
+        }
+        button.home {
+            background: #059669;
+        }
+        button.home:hover {
+            background: #047857;
+        }
+        .message {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+        .message.success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #059669;
+            display: block;
+        }
+        .info-box {
+            background: #f3f4f6;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #374151;
+        }
+        .stored-data {
+            background: #fef3c7;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .stored-data pre {
+            margin: 0;
+            font-size: 12px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧹 Clear Test Data</h1>
+        <p class="subtitle">Clear all DALAN test data from localStorage</p>
+
+        <div class="info-box">
+            <strong>This will clear:</strong>
+            <ul style="margin: 10px 0 0 0; padding-left: 20px;">
+                <li>All registered test users</li>
+                <li>Current session data</li>
+                <li>User preferences</li>
+                <li>Bookmarks and history</li>
+            </ul>
+        </div>
+
+        <button onclick="viewData()">📊 View Current Data</button>
+        <button onclick="clearAllData()">🗑️ Clear All Data</button>
+        <button class="home" onclick="goHome()">🏠 Back to DALAN</button>
+
+        <div id="message" class="message"></div>
+        <div id="dataView" class="stored-data" style="display: none;">
+            <strong>Stored Data:</strong>
+            <pre id="dataContent"></pre>
+        </div>
+    </div>
+
+    <script>
+        function viewData() {
+            const allData = {};
+            
+            // Get all localStorage keys related to DALAN
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key.startsWith('dalan')) {
+                    try {
+                        allData[key] = JSON.parse(localStorage.getItem(key));
+                    } catch (e) {
+                        allData[key] = localStorage.getItem(key);
+                    }
+                }
+            }
+
+            const dataView = document.getElementById('dataView');
+            const dataContent = document.getElementById('dataContent');
+            
+            if (Object.keys(allData).length === 0) {
+                dataContent.textContent = 'No DALAN data found in localStorage';
+            } else {
+                dataContent.textContent = JSON.stringify(allData, null, 2);
+            }
+            
+            dataView.style.display = 'block';
+        }
+
+        function clearAllData() {
+            if (!confirm('Are you sure you want to clear ALL test data? This cannot be undone.')) {
+                return;
+            }
+
+            let clearedCount = 0;
+            const keysToRemove = [];
+
+            // Find all DALAN-related keys
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key.startsWith('dalan')) {
+                    keysToRemove.push(key);
+                }
+            }
+
+            // Remove them
+            keysToRemove.forEach(key => {
+                localStorage.removeItem(key);
+                clearedCount++;
+            });
+
+            // Show success message
+            const message = document.getElementById('message');
+            message.className = 'message success';
+            message.textContent = `✅ Successfully cleared ${clearedCount} items from localStorage. You can now register with any email!`;
+
+            // Hide data view
+            document.getElementById('dataView').style.display = 'none';
+
+            console.log(`Cleared ${clearedCount} DALAN items from localStorage`);
+        }
+
+        function goHome() {
+            window.location.href = 'login.html';
+        }
+
+        // Show current data count on load
+        window.addEventListener('load', function() {
+            let count = 0;
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key.startsWith('dalan')) {
+                    count++;
+                }
+            }
+            console.log(`Found ${count} DALAN items in localStorage`);
+        });
+    </script>
+</body>
+</html>

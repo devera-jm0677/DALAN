@@ -1,0 +1,49 @@
+.program-link-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    text-align: left;
+}
+/* spacing between program rows */
+.performance-summary ul li {
+    margin-bottom: 12px; /* height spacing */
+}
+
+/* button base */
+.program-link-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: none;
+    border: none;
+    padding: 3px 8px;   /* vertical height */
+    font: inherit;
+    cursor: pointer;
+    text-align: left;
+}
+
+/* arrow hidden by default */
+.program-link-btn .arrow {
+    opacity: 0;
+    transform: translateX(-6px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* show arrow on hover */
+.program-link-btn:hover .arrow,
+.program-link-btn:focus-visible .arrow {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* optional subtle hover background */
+.program-link-btn:hover,
+.program-link-btn:focus-visible {
+    background-color: rgba(0, 0, 0, 0.04);
+    border-radius: 6px;
+}
