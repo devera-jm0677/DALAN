@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DALAN - Login</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/static/login.css">
+</head>
+<body>
+    <div class="login-container">
+        <!-- Left Side - Logo and Image -->
+        <section class="left-section">
+            <!-- Logo and Subtitle -->
+            <div class="logo-section">
+                <img src="/static/img/FINAL2.png" alt="DALAN Logo" class="logo-image">
+                <p class="logo-subtitle">Decision Aid for Licensure-based Academic Navigation</p>
+            </div>
+
+            <!-- Illustration Image -->
+            <div class="illustration-container">
+                <img src="/static/img/login.png" alt="Students collaborating on laptop" class="illustration-image">
+            </div>
+        </section>
+
+        <!-- Right Side - Login Form -->
+        <section class="right-section">
+            <div class="login-form-wrapper">
+                <!-- Welcome Message -->
+                <div class="welcome-message">
+                    <h2 class="welcome-title">Welcome!</h2>
+                    <p class="welcome-subtitle">Navigate your college path with ease.</p>
+                </div>
+
+                <!-- Login Form -->
+                <form id="loginForm" class="login-form">
+                    <!-- Email Field -->
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            class="form-input" 
+                            placeholder="Enter your email"
+                            required
+                            autocomplete="email">
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="form-group">
+                        <label for="password" class="form-label">Password</label>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            class="form-input" 
+                            placeholder="Enter your password"
+                            required
+                            autocomplete="current-password">
+                    </div>
+
+                    <!-- Forgot Password Link -->
+                    <div class="forgot-password-wrapper">
+                        <a href="#" class="forgot-password-link" id="forgotPasswordLink">Forgot password?</a>
+                    </div>
+
+                    <!-- Login Button -->
+                    <button type="submit" class="login-button">Login</button>
+
+                    <!-- Register Link -->
+                    <p class="register-text">
+                        Don't have any account? <a href="/register" class="register-link">Register Now</a>
+                    </p>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <script src="/static/login.js"></script>
+</body>
+</html>

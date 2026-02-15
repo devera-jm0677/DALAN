@@ -1,0 +1,449 @@
+/* DALAN Login Screen Styles */
+
+/* Reset and Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: white;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Main Container */
+.login-container {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+}
+
+/* Left Section - Logo and Illustration */
+.left-section {
+    flex: 1;
+    background-color: white;
+    padding: 51px 74px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.logo-wrapper {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+.logo-text {
+    font-family: 'Anton', sans-serif;
+    font-size: 135px;
+    font-weight: 400;
+    color: #2441ac;
+    line-height: 1;
+    margin: 0;
+    letter-spacing: 0.02em;
+}
+
+/* Graduation Cap Decorations */
+.cap-left {
+    position: absolute;
+    left: 70px;
+    top: 118px;
+    width: 58px;
+    height: 27px;
+}
+
+.cap-right {
+    position: absolute;
+    left: 189px;
+    top: 118px;
+    width: 58px;
+    height: 27px;
+}
+
+.logo-subtitle {
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: black;
+    margin: 0;
+    max-width: 419px;
+}
+
+/* Illustration */
+.illustration-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.illustration-image {
+    max-width: 100%;
+    max-height: 594px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+/* Right Section - Login Form */
+.right-section {
+    flex: 0 0 525px;
+    background-color: #2441ac;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+}
+
+.login-form-wrapper {
+    width: 100%;
+    max-width: 420px;
+}
+
+/* Welcome Message */
+.welcome-message {
+    text-align: center;
+    margin-bottom: 72px;
+}
+
+.welcome-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: white;
+    margin: 0 0 10px 0;
+    line-height: 1.2;
+}
+
+.welcome-subtitle {
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    color: white;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Login Form */
+.login-form {
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 27px;
+}
+
+.form-label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: white;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.form-input {
+    width: 100%;
+    height: 55px;
+    background-color: #5791c4;
+    border: none;
+    border-radius: 20px;
+    padding: 0 20px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.form-input::placeholder {
+    color: white;
+    opacity: 1;
+}
+
+.form-input:focus {
+    outline: none;
+    background-color: #6ba3d4;
+}
+
+/* Forgot Password */
+.forgot-password-wrapper {
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+.forgot-password-link {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+
+.forgot-password-link:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+}
+
+/* Login Button */
+.login-button {
+    width: 100%;
+    height: 55px;
+    background-color: #71b0e6;
+    border: none;
+    border-radius: 20px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #2441ac;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 22px;
+}
+
+.login-button:hover {
+    background-color: #85c0f0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.login-button:active {
+    transform: translateY(0);
+}
+
+/* Register Text */
+.register-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    color: white;
+    text-align: center;
+    margin: 0;
+}
+
+.register-link {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+    text-decoration: underline;
+    text-decoration-skip-ink: none;
+    text-underline-position: from-font;
+    transition: opacity 0.3s ease;
+}
+
+.register-link:hover {
+    opacity: 0.8;
+}
+
+/* Error Message Styles */
+.error-message {
+    background-color: rgba(255, 77, 77, 0.2);
+    border: 1px solid rgba(255, 77, 77, 0.5);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    color: #ffdddd;
+    display: none;
+}
+
+.error-message.show {
+    display: block;
+}
+
+/* Success Message Styles */
+.success-message {
+    background-color: rgba(77, 255, 77, 0.2);
+    border: 1px solid rgba(77, 255, 77, 0.5);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    color: #ddffdd;
+    display: none;
+}
+
+.success-message.show {
+    display: block;
+}
+
+/* Loading State */
+.login-button.loading {
+    position: relative;
+    color: transparent;
+    pointer-events: none;
+}
+
+.login-button.loading::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 20px;
+    height: 20px;
+    margin-left: -10px;
+    margin-top: -10px;
+    border: 3px solid rgba(36, 65, 172, 0.3);
+    border-top-color: #2441ac;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .logo-text {
+        font-size: 100px;
+    }
+
+    .cap-left {
+        left: 50px;
+        top: 88px;
+        width: 48px;
+        height: 22px;
+    }
+
+    .cap-right {
+        left: 140px;
+        top: 88px;
+        width: 48px;
+        height: 22px;
+    }
+}
+
+@media (max-width: 992px) {
+    .login-container {
+        flex-direction: column;
+    }
+
+    .left-section {
+        padding: 30px 40px;
+    }
+
+    .right-section {
+        flex: none;
+        min-height: 600px;
+    }
+
+    .logo-text {
+        font-size: 80px;
+    }
+
+    .cap-left {
+        left: 40px;
+        top: 70px;
+        width: 40px;
+        height: 18px;
+    }
+
+    .cap-right {
+        left: 115px;
+        top: 70px;
+        width: 40px;
+        height: 18px;
+    }
+
+    .illustration-container {
+        margin-top: 20px;
+    }
+
+    .illustration-image {
+        max-height: 400px;
+    }
+}
+
+@media (max-width: 768px) {
+    .left-section {
+        padding: 20px;
+    }
+
+    .right-section {
+        padding: 30px 20px;
+    }
+
+    .logo-text {
+        font-size: 60px;
+    }
+
+    .cap-left {
+        left: 30px;
+        top: 53px;
+        width: 32px;
+        height: 14px;
+    }
+
+    .cap-right {
+        left: 88px;
+        top: 53px;
+        width: 32px;
+        height: 14px;
+    }
+
+    .logo-subtitle {
+        font-size: 10px;
+    }
+
+    .welcome-title {
+        font-size: 28px;
+    }
+
+    .welcome-subtitle {
+        font-size: 13px;
+    }
+
+    .login-form-wrapper {
+        max-width: 100%;
+    }
+
+    .illustration-image {
+        max-height: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo-text {
+        font-size: 48px;
+    }
+
+    .cap-left {
+        left: 24px;
+        top: 42px;
+        width: 26px;
+        height: 12px;
+    }
+
+    .cap-right {
+        left: 70px;
+        top: 42px;
+        width: 26px;
+        height: 12px;
+    }
+
+    .form-input {
+        height: 50px;
+        font-size: 14px;
+    }
+
+    .form-label {
+        font-size: 16px;
+    }
+
+    .login-button {
+        height: 50px;
+        font-size: 18px;
+    }
+}
